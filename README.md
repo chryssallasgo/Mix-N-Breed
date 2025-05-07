@@ -8,7 +8,7 @@ Follow these steps to set up the project on your local machine.
 ## 🚀 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/mixnbreed.git
+git clone https://github.com/chryssallasgo/Mix-N-Breed.git
 cd mixnbreed
 ```
 
@@ -65,7 +65,6 @@ php artisan migrate
 
 1. **Open MySQL Workbench** (install it if you don’t have it).
 2. **Create a new connection** with the following settings:
-![image](https://github.com/user-attachments/assets/64e62d0f-4865-4ab8-b276-cbf293877a14)
     - **Connection Name:** `mixnbreed`
     - **Database Name:** `mixnbreed_db`
     - **Username:** `root`
@@ -93,7 +92,7 @@ php artisan migrate
 
 ## 📸 MySQL Workbench Example
 
-> _You can include a screenshot here for visual reference if you’d like!_
+![image](https://github.com/user-attachments/assets/64e62d0f-4865-4ab8-b276-cbf293877a14)
 
 ---
 
