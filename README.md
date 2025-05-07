@@ -9,7 +9,7 @@ Follow these steps to set up the project on your local machine.
 
 ```bash
 git clone https://github.com/chryssallasgo/Mix-N-Breed.git
-cd mixnbreed
+cd Mix-N-Breed
 ```
 
 ---
