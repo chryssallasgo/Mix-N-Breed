@@ -9,7 +9,10 @@
 <body class="bg-orange-50 font-sans">
     <nav class="bg-white shadow mb-6">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/" class="font-bold text-lg mr-110">Mix N’ Breed</a>
+            <a href="/" class="flex items-center font-bold text-lg">
+                <img src="/images/doggielogo.png" alt="Mix N' Breed Logo" class="h-8 w-8 mr-2">
+                Mix N’ Breed
+            </a>
             <!-- Navigation Links -->
             <div class="flex items-center space-x-6">
                 <a href="/about" class="text-gray-700 hover:text-orange-500 transition">About Us</a>

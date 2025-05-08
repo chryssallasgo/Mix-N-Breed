@@ -24,6 +24,14 @@
                     <div class="text-gray-700">Age: <span class="font-semibold">{{ $profile->age ?? 'N/A' }}</span></div>
                     <div class="text-gray-700">Size: <span class="font-semibold">{{ $profile->size ?? 'N/A' }}</span></div>
                     <div class="text-gray-700">Traits: <span class="font-semibold">{{ $profile->traits ?? 'N/A' }}</span></div>
+                    <div class="flex space-x-2 mt-2">
+                        <a href="{{ route('dogprofiles.edit', $profile->id) }}" class="px-3 py-1 bg-orange-400 text-white rounded hover:bg-orange-500 text-sm">Edit</a>
+                        <form action="{{ route('dogprofiles.destroy', $profile->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this profile?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm">Delete</button>
+                        </form>
+                    </div>                    
                 </div>
             @empty
                 <div class="col-span-2 text-center text-gray-500">No dog profiles yet. Add one!</div>

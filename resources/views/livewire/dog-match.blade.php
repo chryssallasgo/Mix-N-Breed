@@ -69,4 +69,15 @@
             </div>
         </div>
     </div>
+    <div class="flex justify-left mt-4 ml-65">
+        <a href="{{ route('dogprofiles.create') }}" class="block px-4 py-2 rounded-md bg-orange-400 text-gray-100 hover:bg-orange-500 cursor-pointer">Add More Dogs 🐶!</a>
+    </div>
+    <div class="flex justify-left mt-4 ml-65">
+        <p class="text-gray-600 text-sm">
+            <strong>Note:</strong> The hybrid dog image is generated using a third-party API and may not represent an actual breed.
+            The breed mix information is based on the selected dog profiles.
+            Please consult a veterinarian for accurate breed information and health assessments.
+        </p>
+    </div>
+
 </div>

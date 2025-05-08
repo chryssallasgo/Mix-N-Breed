@@ -14,6 +14,10 @@ Route::get('/', function () {
 Route::get('/dogprofiles', [DogProfileController::class, 'index'])->name('dogprofiles.index');
 Route::get('/dogprofiles/create', [DogProfileController::class, 'create'])->name('dogprofiles.create');
 Route::post('/dogprofiles', [DogProfileController::class, 'store'])->name('dogprofiles.store');
+Route::get('/dogprofiles/{id}/edit', [DogProfileController::class, 'edit'])->name('dogprofiles.edit');
+Route::put('/dogprofiles/{id}', [DogProfileController::class, 'update'])->name('dogprofiles.update');
+Route::delete('/dogprofiles/{id}', [DogProfileController::class, 'destroy'])->name('dogprofiles.destroy');
+
 //Dog Match Routes
 Route::get('/', [DashboardController::class, 'index']);
 Route::get('/dogmatch', [DogMatchController::class, 'showForm'])->name('dogmatch.form');
