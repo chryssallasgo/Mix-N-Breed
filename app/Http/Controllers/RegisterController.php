@@ -9,7 +9,11 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    public function store(Request $request)
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+    public function register(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -25,6 +29,6 @@ class RegisterController extends Controller
 
         Auth::login($user); // Optionally log the user in immediately
 
-        return redirect()->route('/')->with('success', 'Registration successful!');
+        return redirect('/'); // Redirect to a desired route
     }
 }

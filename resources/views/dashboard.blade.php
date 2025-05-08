@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-white min-h-screen justify-center flex items-center">
+<div class="bg-orange-50 min-h-screen justify-center flex items-center">
     <div class="max-w-5xl mx-auto px-4 py-16">
         <!-- Welcome Section -->
         <div class="mb-12">

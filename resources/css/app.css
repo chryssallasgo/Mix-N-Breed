@@ -1,9 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Hind+Madurai:wght@300;400;500;600;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import "tailwindcss";
 
 .font-sans {
-    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-family: 'Nunito', ui-sans-serif, system-ui, sans-serif;
 }
 
+.body {
+    font-family: 'Nunito', sans-serif;
+}
 
 @tailwind utilities;
+
+.btn.btn.btn-success {
+    cursor: pointer;
+}
+
+.btn.btn.btn-success:hover {
+    color: rgb(255, 197, 110);
+    border: 2px solid #555555;
+}
