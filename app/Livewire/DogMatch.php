@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Http\Controllers\DogMatchController;
-use App\Models\DogProfile;
+use Illuminate\Support\Facades\Auth;
 
 class DogMatch extends Component
 {
@@ -20,7 +20,7 @@ class DogMatch extends Component
     public function mount()
     {
         // Fetch all dog profiles from the database
-        $this->profiles = DogProfile::all();
+        $this->profiles = auth()->user()->dogProfiles;
     }
     public function mixBreeds()
     {

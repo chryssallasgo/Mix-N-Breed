@@ -39,7 +39,8 @@ class DogMatchController extends Controller
     }
     public function showForm()
     {
-        $profiles = DogProfile::all();
+        //$profiles = DogProfile::all();
+        $profiles = auth()->user()->dogProfiles;
         return view('dogmatch', compact('profiles'));
     }
 

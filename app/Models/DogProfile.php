@@ -12,5 +12,10 @@ class DogProfile extends Model
         'age',
         'size',
         'traits',
+        'user_id',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

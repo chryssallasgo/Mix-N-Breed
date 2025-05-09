@@ -10,6 +10,11 @@ use App\Http\Controllers\RegisterController;
 Route::get('/', function () {
     return view('dashboard');
 });
+Route::middleware(['auth'])->group(function () {
+    Route::resource('dogprofiles', DogProfileController::class);
+    Route::get('/dogmatch', [DogMatchController::class, 'showForm'])->name('dogmatch.form');
+    Route::post('/dogmatch', [DogMatchController::class, 'mix'])->name('dogmatch.mix');
+});
 //Dog Profile CRUD Routes
 Route::get('/dogprofiles', [DogProfileController::class, 'index'])->name('dogprofiles.index');
 Route::get('/dogprofiles/create', [DogProfileController::class, 'create'])->name('dogprofiles.create');

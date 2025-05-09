@@ -9,13 +9,14 @@ class DogProfileController extends Controller
 {
     public function edit($id)
     {
-        $profile = DogProfile::findOrFail($id);
+        //$profile = DogProfile::findOrFail($id);
+        $profile = auth()->user()->dogProfiles()->findOrFail($id);
         return view('dogprofiles.edit', compact('profile'));
     }
     public function update(Request $request, $id)
     {
-        $profile = DogProfile::findOrFail($id);
-
+        //$profile = DogProfile::findOrFail($id);
+        $profile = auth()->user()->dogProfiles()->findOrFail($id);
         $validated = $request->validate([
             'image' => 'nullable|image|max:2048',
             'breed' => 'required|string|max:255',
@@ -50,20 +51,24 @@ class DogProfileController extends Controller
             $validated['image'] = $request->file('image')->store('dog_images', 'public');
         }
 
+        $validated['user_id'] = auth()->id();
+
         DogProfile::create($validated);
 
         return redirect()->route('dogprofiles.index')->with('success', 'Profile saved!');
     }
     public function destroy($id)
     {
-        $profile = DogProfile::findOrFail($id);
+        //$profile = DogProfile::findOrFail($id);
+        $profile = auth()->user()->dogProfiles()->findOrFail($id);
         $profile->delete();
 
         return redirect()->route('dogprofiles.index')->with('success', 'Profile deleted!');
     }
     public function index()
     {
-        $profiles = DogProfile::all();
+        //$profiles = DogProfile::all();
+        $profiles = auth()->user()->dogProfiles;
         return view('dogprofiles.index', compact('profiles'));
     }
 }
