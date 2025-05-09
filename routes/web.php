@@ -34,3 +34,7 @@ Route::post('login', [LoginController::class, 'login']);
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::view('/get-started', 'get-started')->name('get-started');
+Route::view('/docs', 'docs')->name('docs');
+Route::view('/about', 'about')->name('about');
