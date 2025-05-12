@@ -7,6 +7,7 @@
     @vite('resources/css/app.css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-orange-50 font-sans">
     <nav class="bg-white shadow mb-6">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -59,8 +60,10 @@
             </div>
         </div>
     </nav>    
+
     <main>
         @yield('content')
+        
     </main>
 </body>
 </html>

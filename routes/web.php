@@ -19,19 +19,19 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dogmatch', [DogMatchController::class, 'mix'])->name('dogmatch.mix');
 });
 //Dog Profile CRUD Routes
-Route::get('/dogprofiles', [DogProfileController::class, 'index'])->name('dogprofiles.index');
-Route::get('/dogprofiles/create', [DogProfileController::class, 'create'])->name('dogprofiles.create');
-Route::post('/dogprofiles', [DogProfileController::class, 'store'])->name('dogprofiles.store');
-Route::get('/dogprofiles/{id}/edit', [DogProfileController::class, 'edit'])->name('dogprofiles.edit');
-Route::put('/dogprofiles/{id}', [DogProfileController::class, 'update'])->name('dogprofiles.update');
-Route::delete('/dogprofiles/{id}', [DogProfileController::class, 'destroy'])->name('dogprofiles.destroy');
-
+Route::middleware('auth')->group(function () {
+    Route::get('/dogprofiles', [DogProfileController::class, 'index'])->name('dogprofiles.index');
+    Route::get('/dogprofiles/create', [DogProfileController::class, 'create'])->name('dogprofiles.create');
+    Route::post('/dogprofiles', [DogProfileController::class, 'store'])->name('dogprofiles.store');
+    Route::get('/dogprofiles/{id}/edit', [DogProfileController::class, 'edit'])->name('dogprofiles.edit');
+    Route::put('/dogprofiles/{id}', [DogProfileController::class, 'update'])->name('dogprofiles.update');
+    Route::delete('/dogprofiles/{id}', [DogProfileController::class, 'destroy'])->name('dogprofiles.destroy');
+});
 //Dog Match Routes
 Route::get('/', [DashboardController::class, 'index']);
-Route::get('/dogmatch', [DogMatchController::class, 'showForm'])->name('dogmatch.form');
-Route::post('/dogmatch', [DogMatchController::class, 'mix'])->name('dogmatch.mix');
 Route::middleware('auth')->group(function () {
-    Route::get('/dogmatch', [DogMatchController::class, 'showForm'])->name('dogmatch');
+    Route::get('/dogmatch', [DogMatchController::class, 'showForm'])->name('dogmatch.form');
+    Route::post('/dogmatch', [DogMatchController::class, 'mix'])->name('dogmatch.mix');
 });
 //Authentication Routes
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
