@@ -6,6 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DogMatchController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\DogProfileController as AdminDogProfileController;
+use App\Http\Controllers\Admin\AuthController;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -27,7 +30,9 @@ Route::delete('/dogprofiles/{id}', [DogProfileController::class, 'destroy'])->na
 Route::get('/', [DashboardController::class, 'index']);
 Route::get('/dogmatch', [DogMatchController::class, 'showForm'])->name('dogmatch.form');
 Route::post('/dogmatch', [DogMatchController::class, 'mix'])->name('dogmatch.mix');
-
+Route::middleware('auth')->group(function () {
+    Route::get('/dogmatch', [DogMatchController::class, 'showForm'])->name('dogmatch');
+});
 //Authentication Routes
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
@@ -38,3 +43,13 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::view('/get-started', 'get-started')->name('get-started');
 Route::view('/docs', 'docs')->name('docs');
 Route::view('/about', 'about')->name('about');
+
+//admin routes
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminUserController::class, 'dashboard'])->name('dashboard');
+
+    Route::resource('users', AdminUserController::class)->except(['create', 'store', 'show']);
+    Route::resource('dogprofiles', AdminDogProfileController::class)->except(['create', 'store', 'show']);
+});
+Route::get('/admin/login', [App\Http\Controllers\Admin\AuthController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [App\Http\Controllers\Admin\AuthController::class, 'login']);

@@ -9,7 +9,7 @@
             <p class="text-gray-700 text-lg mb-8 max-w-2xl">
                 A site where you can get a generated preview look of a dog that is a mix of two different breeds! We also help you understand more about dog breeding, risks, and compatibility so you can become a better dog owner.
             </p>
-            <a href="/dogmatch" class="inline-block bg-orange-400 text-white px-6 py-2 rounded-md font-semibold mb-4">Try it out!</a>
+            <a href="{{ auth()->check() ? route('dogmatch') : route('login') }}" class="inline-block bg-orange-400 text-white px-6 py-2 rounded-md font-semibold mb-4">Try it out!</a>
         </div>
 
         <!-- Statistics Section -->

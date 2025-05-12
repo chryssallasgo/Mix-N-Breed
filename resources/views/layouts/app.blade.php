@@ -5,6 +5,7 @@
     <title>Mix N' Breed</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-orange-50 font-sans">
     <nav class="bg-white shadow mb-6">
@@ -24,7 +25,17 @@
                     <a href="/login" class="px-4 py-2 rounded-md border border-orange-400 text-black font-semibold hover:bg-orange-50 transition">Login</a>
                     <a href="/register" class="ml-2 px-4 py-2 rounded-md bg-orange-400 text-white font-semibold hover:bg-orange-500 transition shadow">Sign Up</a>
                 @endguest
-    
+                <!-- Admin Login Icon Link -->
+                <a href="{{ route('admin.login') }}" title="Admin Login" class="text-gray-700 hover:text-orange-600 ml-4">
+                    <i class="fas fa-lock fa-lg"></i>
+                    <!-- Or use SVG icon inline -->
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c.828 0 1.5.672 1.5 1.5S12.828 14 12 14s-1.5-.672-1.5-1.5S11.172 11 12 11z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v4m-6 4v6a6 6 0 0012 0v-6m-6 0V7a3 3 0 016 0v4" />
+                    </svg>
+
+                </a>
                 @auth
                 <div class="relative group">
                     <button class="flex items-center focus:outline-none">

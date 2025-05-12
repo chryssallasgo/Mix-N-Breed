@@ -27,14 +27,25 @@
     <h2 class="text-2xl font-semibold text-orange-500 mb-4">Meet the Team</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
         <div class="bg-orange-50 p-6 rounded-lg shadow">
-            <h3 class="text-xl font-bold mb-2">Alex Johnson</h3>
-            <p class="text-gray-700">Founder & Developer. Dog lover and full-stack wizard.</p>
+            <h3 class="text-xl font-bold mb-2">Iway, Mark Jorland</h3>
+            <p class="text-gray-700">Founder & Developer. Dog lover and back-end wizard.</p>
         </div>
         <div class="bg-orange-50 p-6 rounded-lg shadow">
-            <h3 class="text-xl font-bold mb-2">Maria Lee</h3>
-            <p class="text-gray-700">Designer & Community Manager. Passionate about UX and pups.</p>
+            <h3 class="text-xl font-bold mb-2">Allasgo, Chryssdale Heart</h3>
+            <p class="text-gray-700">Designer & Hipster. Passionate about UX and pups.</p>
         </div>
-        <!-- Add more team members as needed -->
+        <div class="bg-orange-50 p-6 rounded-lg shadow">
+            <h3 class="text-xl font-bold mb-2">Marte, Ares Daniel</h3>
+            <p class="text-gray-700">Project Manager. Leads the team to pup paradise</p>
+        </div>
+        <div class="bg-orange-50 p-6 rounded-lg shadow">
+            <h3 class="text-xl font-bold mb-2">Igot, Chelsie</h3>
+            <p class="text-gray-700">Backend Assistant. Helps the hacker regarding back-end coding.</p>
+        </div>
+        <div class="bg-orange-50 p-6 rounded-lg shadow">
+            <h3 class="text-xl font-bold mb-2">Lumapas, Nina Regene</h3>
+            <p class="text-gray-700">Project Manager Assistant. Helps the manager manage the things that needs to be managed.</p>
+        </div>
     </div>
 
     <h2 class="text-2xl font-semibold text-orange-500 mt-10 mb-4">Get in Touch</h2>
