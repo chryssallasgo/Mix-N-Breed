@@ -11,12 +11,12 @@ class DogMatchController extends Controller
     public function mix(Request $request)
     {
         $request->validate([
-            'dog1_id' => 'required|exists:dog_profiles,id',
-            'dog2_id' => 'required|exists:dog_profiles,id',
+            'dog_ids' => 'required|array|size:2',
+            'dog_ids.*' => 'exists:dog_profiles,id',
         ]);
 
-        $dog1 = DogProfile::find($request->dog1_id);
-        $dog2 = DogProfile::find($request->dog2_id);
+        $dog1 = DogProfile::find($request->dog_ids[0]);
+        $dog2 = DogProfile::find($request->dog_ids[1]);
 
         $breed1 = $dog1->breed;
         $breed2 = $dog2->breed;
@@ -37,11 +37,19 @@ class DogMatchController extends Controller
             'mixNames' => $mixNames,
         ];
     }
-    public function showForm()
+    public function showForm(Request $request)
     {
-        //$profiles = DogProfile::all();
         $profiles = auth()->user()->dogProfiles;
-        return view('dogmatch', compact('profiles'));
+
+        // Get array of selected dog IDs or empty array
+        $selectedDogIds = $request->query('dog_ids', []);
+
+        // Ensure it's an array
+        if (!is_array($selectedDogIds)) {
+            $selectedDogIds = [$selectedDogIds];
+        }
+
+        return view('dogmatch', compact('profiles', 'selectedDogIds'));
     }
 
     private function getMixName($breed1, $breed2)

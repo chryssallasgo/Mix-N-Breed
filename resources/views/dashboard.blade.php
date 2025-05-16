@@ -14,10 +14,12 @@
 
         <!-- Statistics Section -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
-            <div class="bg-orange-100 shadow rounded-lg p-8 text-center">
-                <div class="text-3xl font-bold text-orange-600">{{ $dogCount ?? '--' }}</div>
-                <div class="text-gray-700 mt-2">Dogs Registered</div>
-            </div>
+            <a href="{{ route('dogprofiles.all') }}">
+                <div class="bg-orange-100 shadow rounded-lg p-8 text-center cursor-pointer hover:bg-orange-200 transition">
+                    <div class="text-3xl font-bold text-orange-600">{{ $dogCount ?? '--' }}</div>
+                    <div class="text-gray-700 mt-2">Dogs Registered</div>
+                </div>
+            </a>
             <div class="bg-blue-100 shadow rounded-lg p-8 text-center">
                 <div class="text-3xl font-bold text-blue-600">{{ $matchCount ?? '--' }}</div>
                 <div class="text-gray-700 mt-2">Matches Made</div>

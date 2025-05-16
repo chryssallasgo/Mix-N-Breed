@@ -20,7 +20,8 @@ class DogProfileController extends Controller
         $validated = $request->validate([
             'image' => 'nullable|image|max:2048',
             'breed' => 'required|string|max:255',
-            'age' => 'nullable|integer|min:0',
+            'birthdate' => 'required|date|before:today',
+            'weight' => 'nullable|numeric|min:0',
             'size' => 'nullable|string|max:50',
             'traits' => 'nullable|string|max:255',
         ]);
@@ -42,7 +43,8 @@ class DogProfileController extends Controller
         $validated = $request->validate([
             'image' => 'nullable|image|max:2048',
             'breed' => 'required|string|max:255',
-            'age' => 'nullable|integer|min:0',
+            'birthdate' => 'required|date|before:today',
+            'weight' => 'nullable|numeric|min:0',
             'size' => 'nullable|string|max:50',
             'traits' => 'nullable|string|max:255',
         ]);
@@ -59,7 +61,6 @@ class DogProfileController extends Controller
     }
     public function destroy($id)
     {
-        //$profile = DogProfile::findOrFail($id);
         $profile = auth()->user()->dogProfiles()->findOrFail($id);
         $profile->delete();
 
@@ -67,8 +68,17 @@ class DogProfileController extends Controller
     }
     public function index()
     {
-        //$profiles = DogProfile::all();
         $profiles = auth()->user()->dogProfiles;
         return view('dogprofiles.index', compact('profiles'));
+    }
+    public function allProfiles()
+    {
+        $profiles = DogProfile::with('user')->paginate(12); // eager load user, paginate for performance
+        return view('dogprofiles.all', compact('profiles'));
+    }
+    public function show($id)
+    {
+        $profile = DogProfile::with('user')->findOrFail($id);
+        return view('dogprofiles.show', compact('profile'));
     }
 }

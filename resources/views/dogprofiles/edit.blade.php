@@ -40,6 +40,22 @@
                 @enderror
             </div>
             <div class="mb-4">
+                <label for="birthdate" class="block text-orange-700 font-semibold mb-1">Birthdate</label>
+                <input type="date" name="birthdate" id="birthdate" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300 @error('birthdate') border-red-400 @enderror" value="{{ old('birthdate', $profile->birthdate ?? '') }}">
+                @error('birthdate')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="weight" class="block text-orange-700 font-semibold mb-1">Weight</label>
+                <input type="number" step="0.1" name="weight" id="weight" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300 @error('birthdate') border-red-400 @enderror" value="{{ old('weight', $profile->weight ?? '') }}" />
+                @error('birthdate')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-4">
                 <label class="block text-orange-700 font-semibold mb-1">Size</label>
                 <select name="size" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300 @error('size') border-red-400 @enderror">
                     <option value="">Select size</option>

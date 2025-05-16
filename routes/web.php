@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('dashboard');
 });
 Route::middleware(['auth'])->group(function () {
-    Route::resource('dogprofiles', DogProfileController::class);
     Route::get('/dogmatch', [DogMatchController::class, 'showForm'])->name('dogmatch.form');
     Route::post('/dogmatch', [DogMatchController::class, 'mix'])->name('dogmatch.mix');
 });
@@ -27,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dogprofiles/{id}/edit', [DogProfileController::class, 'edit'])->name('dogprofiles.edit');
     Route::put('/dogprofiles/{id}', [DogProfileController::class, 'update'])->name('dogprofiles.update');
     Route::delete('/dogprofiles/{id}', [DogProfileController::class, 'destroy'])->name('dogprofiles.destroy');
+    Route::get('/dogprofiles/all', [DogProfileController::class, 'allProfiles'])->name('dogprofiles.all');
+    Route::get('/dogprofiles/{id}', [DogProfileController::class, 'show'])->name('dogprofiles.show');
 });
 //Dog Match Routes
 Route::get('/', [DashboardController::class, 'index']);
@@ -61,4 +62,3 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 });
-

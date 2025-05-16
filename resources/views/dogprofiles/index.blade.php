@@ -24,6 +24,8 @@
                     <div class="text-gray-700">Age: <span class="font-semibold">{{ $profile->age ?? 'N/A' }}</span></div>
                     <div class="text-gray-700">Size: <span class="font-semibold">{{ $profile->size ?? 'N/A' }}</span></div>
                     <div class="text-gray-700">Traits: <span class="font-semibold">{{ $profile->traits ?? 'N/A' }}</span></div>
+                    <div class="text-gray-700">Weight: <span class="font-semibold">{{ $profile->weight ?? 'N/A' }}</span></div>
+                    <div class="text-gray-700">Birth Date: <span class="font-semibold">{{ $profile->birthdate ?? 'N/A' }}</span></div>
                     <div class="flex space-x-2 mt-2">
                         <a href="{{ route('dogprofiles.edit', $profile->id) }}" class="px-3 py-1 bg-orange-400 text-white rounded hover:bg-orange-500 text-sm">Edit</a>
                         <form action="{{ route('dogprofiles.destroy', $profile->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this profile?');">

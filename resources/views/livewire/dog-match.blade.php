@@ -11,26 +11,22 @@
                         @csrf
                         <div class="mb-3">
                             <label for="breed1" class="form-label">First Dog Profile</label>
-                            <select id="breed1" name="breed1" wire:model.defer="breed1" class="form-select" required>
-                                <option value="">Choose a dog</option>
-                                @foreach($profiles as $profile)
-                                    <option value="{{ $profile->id }}">
-                                        {{ $profile->breed }} 
-                                        ({{ $profile->age ? $profile->age.' yrs' : 'Age N/A' }}, 
-                                        {{ $profile->size ?? 'Size N/A' }})
+                            <select name="dog1_id" class="...">
+                                <option value="">Choose first dog</option>
+                                @foreach($profiles as $dog)
+                                    <option value="{{ $dog->id }}" {{ (isset($selectedDogIds[0]) && $selectedDogIds[0] == $dog->id) ? 'selected' : '' }}>
+                                        {{ $dog->breed }} ({{ $dog->age ?? 'N/A' }} yrs)
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="breed2" class="form-label">Second Dog Profile</label>
-                            <select id="breed2" name="breed2" wire:model.defer="breed2" class="form-select" required>
-                                <option value="">Choose a dog</option>
-                                @foreach($profiles as $profile)
-                                    <option value="{{ $profile->id }}">
-                                        {{ $profile->breed }} 
-                                        ({{ $profile->age ? $profile->age.' yrs' : 'Age N/A' }}, 
-                                        {{ $profile->size ?? 'Size N/A' }})
+                            <select name="dog2_id" class="...">
+                                <option value="">Choose second dog</option>
+                                @foreach($profiles as $dog)
+                                    <option value="{{ $dog->id }}" {{ (isset($selectedDogIds[1]) && $selectedDogIds[1] == $dog->id) ? 'selected' : '' }}>
+                                        {{ $dog->breed }} ({{ $dog->age ?? 'N/A' }} yrs)
                                     </option>
                                 @endforeach
                             </select>
