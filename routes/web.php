@@ -15,8 +15,7 @@ Route::get('/', function () {
 });
 Route::middleware(['auth'])->group(function () {
     Route::resource('dogprofiles', DogProfileController::class);
-    Route::get('/dogmatch', [DogMatchController::class, 'showForm'])->name('dogmatch.form');
-    Route::post('/dogmatch', [DogMatchController::class, 'mix'])->name('dogmatch.mix');
+    Route::get('/dogmatch', [DogMatchController::class, 'form'])->name('dogmatch.form');
 });
 //Dog Profile CRUD Routes
 Route::middleware('auth')->group(function () {
@@ -30,8 +29,8 @@ Route::middleware('auth')->group(function () {
 //Dog Match Routes
 Route::get('/', [DashboardController::class, 'index']);
 Route::middleware('auth')->group(function () {
-    Route::get('/dogmatch', [DogMatchController::class, 'showForm'])->name('dogmatch.form');
-    Route::post('/dogmatch', [DogMatchController::class, 'mix'])->name('dogmatch.mix');
+    Route::get('/dogmatch', [DogMatchController::class, 'form'])->name('dogmatch.form');
+    Route::post('/dogmatch/process', [DogMatchController::class, 'process'])->name('dogmatch.process');
 });
 //Authentication Routes
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -46,7 +45,7 @@ Route::view('/about', 'about')->name('about');
 
 //admin routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminUserController::class, 'dashboard'])->name('dashboard');
+    Route::get('/admindashboard', [AdminUserController::class, 'admindashboard'])->name('admindashboard');
 
     Route::resource('users', AdminUserController::class)->except(['create', 'store', 'show']);
     Route::resource('dogprofiles', AdminDogProfileController::class)->except(['create', 'store', 'show']);

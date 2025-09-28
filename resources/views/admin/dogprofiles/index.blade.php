@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-6 text-orange-600">Manage Dog Profiles</h1>
-<a href="{{ route('admin.dashboard') }}" class="ml-4 text-orange-600 hover:underline">Back to Dashboard</a>
+<a href="{{ route('admin.admindashboard') }}" class="ml-4 text-orange-600 hover:underline">Back to Dashboard</a>
     @if(session('success'))
         <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
             {{ session('success') }}

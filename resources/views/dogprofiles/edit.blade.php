@@ -13,7 +13,7 @@
             <div class="mb-4 justify-items-center">
                 <label class="block text-orange-700 font-semibold mb-1 text-center">Current Image</label>
                 @if($profile->image)
-                    <img src="{{ asset('storage/'.$profile->image) }}" class="w-36 h-36 rounded-full mb-2 object-cover border-2 border-orange-200">
+                    <img id="imagePreview" src="{{ asset('storage/'.$profile->image) }}" class="w-36 h-36 rounded-full mb-2 object-cover border-2 border-orange-200">
                 @else
                     <span class="text-gray-500">No image uploaded.</span>
                 @endif

@@ -17,7 +17,7 @@ class UserController extends Controller
         $users = User::orderBy('created_at', 'desc')->paginate(10);
         $dogProfiles = \App\Models\DogProfile::with('user')->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('admin.dashboard', compact('totalUsers', 'totalDogProfiles', 'users', 'dogProfiles'));
+        return view('admin.admindashboard', compact('totalUsers', 'totalDogProfiles', 'users', 'dogProfiles'));
     }
 
     public function edit($id)
@@ -50,7 +50,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('admin.dashboard')->with('success', 'User deleted.');
+        return redirect()->route('admin.admindashboard')->with('success', 'User deleted.');
     }
 
     public function index()

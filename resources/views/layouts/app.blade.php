@@ -63,7 +63,68 @@
 
     <main>
         @yield('content')
-        
+            <!-- Footer -->
+    <footer class="bg-orange-100 border-t-2 border-orange-200 mt-16">
+            <div class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo & About -->
+                <div class="flex flex-col items-center md:items-start">
+                    <img src="{{ asset('images/doggielogo.png') }}" alt="Mix N' Breed Logo" class="w-14 h-14 mb-2">
+                    <span class="font-bold text-orange-700 text-xl mb-2">Mix N' Breed</span>
+                    <p class="text-gray-700 text-sm mb-2 text-center md:text-left">
+                        Helping you discover the magic of mixed breeds.<br>
+                        Your guide to responsible and fun dog breeding! 🐾
+                    </p>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="font-semibold text-orange-700 mb-3">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-700 text-sm">
+                        <li><a href="{{ url('/') }}" class="hover:text-orange-600">Home</a></li>
+                        <li><a href="{{ route('dogprofiles.index') }}" class="hover:text-orange-600">Your Dogs</a></li>
+                        <li><a href="{{ route('dogmatch.form') }}" class="hover:text-orange-600">Mix Breeds</a></li>
+                        <li><a href="#" class="hover:text-orange-600">Health Tips</a></li>
+                        <li><a href="#" class="hover:text-orange-600">Contact Us</a></li>
+                    </ul>
+                </div>
+                <!-- Resources -->
+                <div>
+                    <h3 class="font-semibold text-orange-700 mb-3">Resources</h3>
+                    <ul class="space-y-2 text-gray-700 text-sm">
+                        <li><a href="#" class="hover:text-orange-600">Dog Breeding Guide</a></li>
+                        <li><a href="#" class="hover:text-orange-600">Compatibility Checker</a></li>
+                        <li><a href="#" class="hover:text-orange-600">Breeder Tips</a></li>
+                        <li><a href="#" class="hover:text-orange-600">FAQs</a></li>
+                    </ul>
+                </div>
+                <!-- Contact & Social -->
+                <div>
+                    <h3 class="font-semibold text-orange-700 mb-3">Connect</h3>
+                    <ul class="space-y-2 text-gray-700 text-sm">
+                        <li>
+                            <a href="mailto:info@mixnbreed.com" class="hover:text-orange-600 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 12H8m8 0a4 4 0 11-8 0 4 4 0 018 0zm2 4v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2"></path></svg>
+                                info@mixnbreed.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-orange-600 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" /><circle cx="12" cy="12" r="3.5" /><circle cx="17.5" cy="6.5" r="1.5" /></svg>
+                                Instagram
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-orange-600 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22.54 6.42a8.94 8.94 0 01-2.54.7 4.48 4.48 0 001.98-2.48 8.94 8.94 0 01-2.83 1.08 4.48 4.48 0 00-7.64 4.08A12.72 12.72 0 013 4.89a4.48 4.48 0 001.39 5.98 4.48 4.48 0 01-2.03-.56v.06a4.48 4.48 0 003.6 4.4 4.48 4.48 0 01-2.02.08 4.48 4.48 0 004.18 3.11A9 9 0 012 19.54a12.72 12.72 0 006.88 2.02c8.26 0 12.78-6.84 12.78-12.78 0-.19 0-.38-.01-.57A9.22 9.22 0 0024 4.59a8.94 8.94 0 01-2.54.7z"></path></svg>
+                                Twitter
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center text-gray-500 text-xs py-4 border-t border-orange-200">
+                &copy; {{ date('Y') }} Mix N' Breed. All rights reserved.
+            </div>
+        </footer>
     </main>
 </body>
 </html>
