@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center bg-orange-50 bg-[url('/images/paws-bg.png')] bg-cover">
+<div class="min-h-screen flex items-center justify-center bg-orange-50 bg-[url('/images/skid.jpg')] bg-cover">
     <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 border-2 border-orange-200">
         <div class="flex flex-col items-center mb-6">
             <img src="/images/doggielogo.png" alt="Dog Logo" class="w-16 h-16 mb-2">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DogProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -16,7 +17,7 @@ class DashboardController extends Controller
     }
     public function tryItOut()
     {
-        if (!auth()->check()) {
+        if (Auth::check()) {
             flash()->warning('Please login or register to try DogMatch!');
             return redirect()->route('login');
         }
@@ -25,7 +26,7 @@ class DashboardController extends Controller
     }
     public function addDogProfile()
     {
-        if (!auth()->check()) {
+        if (Auth::check()) {
             flash()->warning('Please login or register to add a dog profile.');
             return redirect()->route('login');
         }

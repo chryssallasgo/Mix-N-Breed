@@ -6,7 +6,11 @@
         <div class="flex flex-col items-center mb-6">
             <img src="/images/doggielogo.png" alt="Dog Logo" class="w-16 h-16 mb-2">
             <h2 class="text-2xl font-bold text-orange-700 mb-1">Your Dog Profiles</h2>
-            <a href="{{ route('dogprofiles.create') }}" class="mt-2 px-4 py-2 rounded-md bg-orange-400 text-white font-semibold hover:bg-orange-500 transition shadow">Add New Dog</a>
+            <div class="mt-2 mr-8 flex flex-row space-x-0.5"> 
+                <a href="{{ route('dogprofiles.create') }}" class="mt-2 px-4 py-2 rounded-md bg-orange-400 text-white font-semibold hover:bg-orange-500 transition shadow">Add New Dog</a> 
+                &nbsp; &nbsp; &nbsp;
+                <a href="{{ route ('dogmatch.form')}}" class="mt-2 px-4 py-2 rounded-md bg-orange-400 text-white font-semibold hover:bg-orange-500 transition">Mix Breed</a>
+            </div>
         </div>
         @if(session('success'))
             <div class="mb-4 text-green-600 text-center font-semibold">{{ session('success') }}</div>
@@ -20,10 +24,18 @@
                     @else
                         <img src="/images/dog-logo.png" alt="Dog Image" class="w-24 h-24 rounded-full mb-2 object-cover border-2 border-orange-200 opacity-60">
                     @endif
-                    <div class="text-lg font-bold text-orange-700">{{ $profile->breed }}</div>
+                    <div class="text-lg font-bold text-orange-700" id="dog1Info">Name: <span class="font-semibold">{{ $profile->name ?? 'N/A' }}</span></div>
+                    <div class="text-gray-700 ">Breed: <span class="font-semibold">{{ $profile->breed }}</div>
                     <div class="text-gray-700">Age: <span class="font-semibold">{{ $profile->age ?? 'N/A' }}</span></div>
                     <div class="text-gray-700">Size: <span class="font-semibold">{{ $profile->size ?? 'N/A' }}</span></div>
                     <div class="text-gray-700">Traits: <span class="font-semibold">{{ $profile->traits ?? 'N/A' }}</span></div>
+                    <div class="text-gray-700">Gender: <span class="font-semibold">{{ $profile->gender === null ? 'N/A' : ($profile->gender ? 'Male' : 'Female') }}</span></div>
+                    <div class="text-gray-700">Weight: <span class="font-semibold">{{ $profile->weight ?? 'N/A' }}{{ $profile->weight ? ' kg' : '' }}</span></div>
+                    <div class="text-gray-700">Vaccination: <span class="font-semibold">{{ $profile->vaccination_status ?? 'N/A' }}</span></div>
+                    <div class="text-gray-700">Health: <span class="font-semibold">{{ $profile->health_status ?? 'N/A' }}</span></div>
+                    <div class="text-gray-700">Spayed/Neutered: <span class="font-semibold">{{ $profile->spayed_neutered === null ? 'N/A' : ($profile->spayed_neutered ? 'Yes' : 'No') }}</span></div>
+                    <div class="text-gray-700">Owner Contact: <span class="font-semibold">{{ $profile->owner_contact ?? 'N/A' }}</span></div>
+                    <div class="text-gray-700">Date of Birth: <span class="font-semibold">{{ $profile->date_of_birth ?? 'N/A' }}</span></div>
                     <div class="flex space-x-2 mt-2">
                         <a href="{{ route('dogprofiles.edit', $profile->id) }}" class="px-3 py-1 bg-orange-400 text-white rounded hover:bg-orange-500 text-sm">Edit</a>
                         <form action="{{ route('dogprofiles.destroy', $profile->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this profile?');">

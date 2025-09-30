@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
 </head>
 
 <body class="bg-orange-50 font-sans">
-    <nav class="bg-white shadow mb-6">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/" class="flex items-center font-bold text-lg">
+    <nav class="bg-white shadow">
+        <div class="max-w-1xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center text-orange-500 font-bold text-lg">
                 <img src="/images/doggielogo.png" alt="Mix N' Breed Logo" class="h-8 w-8 mr-2">
                 Mix N’ Breed
             </a>
@@ -19,7 +22,7 @@
             <div class="flex items-center space-x-6">
                 <a href="/about" class="text-gray-700 hover:text-orange-500 transition">About Us</a>
                 <a href="/docs" class="text-gray-700 hover:text-orange-500 transition">Docs</a>
-                <a href="/get-started" class="text-gray-700 hover:text-orange-500 transition">Get Started</a>
+                <a href="{{ auth()->check() ? route('dogmatch.form') : route('login') }}" class="text-gray-700 hover:text-orange-500 transition">Get Started</a>
                 
                 <!-- Auth Buttons/Profile -->
                 @guest
@@ -64,7 +67,7 @@
     <main>
         @yield('content')
             <!-- Footer -->
-    <footer class="bg-orange-100 border-t-2 border-orange-200 mt-16">
+    <footer class="bg-orange-100 border-t-2 border-orange-100 mt-16">
             <div class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Logo & About -->
                 <div class="flex flex-col items-center md:items-start">
@@ -121,10 +124,13 @@
                     </ul>
                 </div>
             </div>
-            <div class="text-center text-gray-500 text-xs py-4 border-t border-orange-200">
+            <div class="bg-orange-400 text-center text-gray-100 text-xs py-4 border-t border-orange-300">
                 &copy; {{ date('Y') }} Mix N' Breed. All rights reserved.
             </div>
         </footer>
     </main>
+    <script>
+  feather.replace();
+</script>
 </body>
 </html>

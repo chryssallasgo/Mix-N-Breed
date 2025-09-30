@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use App\Models\DogProfile;
 use Symfony\Component\Process\Process;
 use Flasher\Prime\Flasher;
+use Illuminate\Support\Facades\Storage;
 
 class DogMatchController extends Controller
 {
@@ -14,50 +15,93 @@ class DogMatchController extends Controller
     {
         return view('dogmatch.form');
     }
+
     public function process(Request $request)
     {
-        // Validate and store uploaded images
-        $request->validate([
-            'dog1' => 'required|image|mimes:jpeg,png,jpg',
-            'dog2' => 'required|image|mimes:jpeg,png,jpg',
-        ]);
-
-        $sessionId = uniqid();
-        $path = $request->file('dog1')->move("/workspace/ComfyUI/input", "{$sessionId}_dog1.png");
-        $path = $request->file('dog2')->move("/workspace/ComfyUI/input", "{$sessionId}_dog2.png");
-        dd($path);
-
-        // Optional: Update ComfyUI workflow JSON to point to these images
-        // You can write a helper function to modify the node graph JSON
-
-        // Trigger ComfyUI headless run
-        $process = new Process(['python3', '/workspace/ComfyUI/main.py', '--workflow', '/workspace/ComfyUI/workflows/image2image.json']);
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            return back()->withErrors(['fusion' => 'Fusion process failed.']);
-        }
-        exec('python3 /workspace/ComfyUI/main.py --workflow /workspace/ComfyUI/workflows/image2image.json');
-
-
-        // Return the fused image
-        return response()->file(storage_path('app/comfyui/output/fused_dog.png'));
-
         try {
             $request->validate([
-                'dog1' => 'required|image|mimes:jpeg,png,jpg',
-                'dog2' => 'required|image|mimes:jpeg,png,jpg',
+                'dog1' => 'nullable|image|mimes:jpeg,png,jpg',
+                'dog2' => 'nullable|image|mimes:jpeg,png,jpg',
+                'profile1' => 'nullable|exists:dog_profiles,id',
+                'profile2' => 'nullable|exists:dog_profiles,id',
             ]);
 
-            $request->file('dog1')->move('/workspace/ComfyUI/input', 'dog1.png');
-            $request->file('dog2')->move('/workspace/ComfyUI/input', 'dog2.png');
+            if (!$request->hasFile('dog1') && !$request->profile1) {
+                return back()->withErrors(['dog1' => 'Please upload an image or select a profile for Dog 1.']);
+            }
+            if (!$request->hasFile('dog2') && !$request->profile2) {
+                return back()->withErrors(['dog2' => 'Please upload an image or select a profile for Dog 2.']);
+            }
 
-            exec('python3 /workspace/ComfyUI/main.py --workflow /workspace/ComfyUI/workflows/fusion_graph.json');
+            // generate unique filenames
+            $sessionId = uniqid();
+            $dog1Name = "{$sessionId}_dog1.png";
+            $dog2Name = "{$sessionId}_dog2.png";
 
-            Flasher::addSuccess('Fusion complete! 🐶 Your mixed breed is ready.');
-            return redirect()->route('dogmatch.form'); // or back to the form with preview
+            // Dog 1 image
+            if ($request->hasFile('dog1')) {
+                Storage::disk('vast')->put($dog1Name, file_get_contents($request->file('dog1')));
+            } elseif ($request->profile1) {
+                $profile1 = \App\Models\DogProfile::find($request->profile1);
+                if ($profile1 && $profile1->image) {
+                    $imagePath = storage_path('app/public/' . $profile1->image);
+                    Storage::disk('vast')->put($dog1Name, file_get_contents($imagePath));
+                } else {
+                    throw new \Exception('Selected profile for Dog 1 has no image.');
+                }
+            }
+
+            // Dog 2 image
+            if ($request->hasFile('dog2')) {
+                Storage::disk('vast')->put($dog2Name, file_get_contents($request->file('dog2')));
+            } elseif ($request->profile2) {
+                $profile2 = \App\Models\DogProfile::find($request->profile2);
+                if ($profile2 && $profile2->image) {
+                    $imagePath = storage_path('app/public/' . $profile2->image);
+                    Storage::disk('vast')->put($dog2Name, file_get_contents($imagePath));
+                } else {
+                    throw new \Exception('Selected profile for Dog 2 has no image.');
+                }
+            }
+
+            // load and update the workflow JSON
+            $workflowPath = 'workflows/image2image.json';
+
+            if (!Storage::disk('vast')->exists($workflowPath)) {
+                throw new \Exception("Workflow file not found at: {$workflowPath}");
+            }
+
+            $workflowRaw = Storage::disk('vast')->get($workflowPath);
+            $workflow = json_decode($workflowRaw, true);
+
+            if (!is_array($workflow) || !isset($workflow['nodes'])) {
+                throw new \Exception("Invalid workflow format or missing 'nodes' key.");
+            }
+
+            foreach ($workflow['nodes'] as &$node) {
+                if ($node['class_type'] === 'LoadImage') {
+                    if (str_contains($node['inputs']['image_path'], 'dog1')) {
+                        $node['inputs']['image_path'] = "input/{$dog1Name}";
+                    } elseif (str_contains($node['inputs']['image_path'], 'dog2')) {
+                        $node['inputs']['image_path'] = "input/{$dog2Name}";
+                    }
+                }
+            }
+
+            //ComfyUI via API
+            $response = Http::post('http://1.208.108.242:8188/prompt', [
+                'prompt' => $workflow,
+                'client_id' => $sessionId,
+            ]);
+
+            if ($response->successful()) {
+                flash()->success('Fusion triggered via API! 🐶 Your mixed breed is on the way.');
+                return redirect()->route('dogmatch.form');
+            } else {
+                throw new \Exception('API trigger failed: ' . $response->body());
+            }
         } catch (\Exception $e) {
-            Flasher::addError('Fusion failed: ' . $e->getMessage());
+            flash()->error('Fusion failed: ' . $e->getMessage());
             return back();
         }
     }

@@ -41,7 +41,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
@@ -60,6 +60,14 @@ return [
             'report' => false,
         ],
 
+        'vast' => [
+            'driver' => 'sftp',
+            'host' => '1.208.108.242',
+            'port' => 33591,
+            'username' => 'root',
+            'privateKey' => storage_path('keys/id_rsa'), // your SSH key
+            'root' => '/workspace/ComfyUI/input',
+        ],
     ],
 
     /*

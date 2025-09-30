@@ -28,7 +28,7 @@ class AuthController extends Controller
 
             // Check if user is admin
             if (Auth::user()->is_admin) {
-                return redirect()->intended(route('admin.dashboard'));
+                return redirect()->intended(route('admin.admindashboard'));
             }
 
             // Not admin: logout and show error
