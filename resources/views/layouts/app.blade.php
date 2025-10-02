@@ -12,64 +12,313 @@
 </head>
 
 <body class="bg-orange-50 font-sans">
-    <nav class="bg-white shadow">
-        <div class="max-w-1xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/" class="flex items-center text-orange-500 font-bold text-lg">
-                <img src="/images/doggielogo.png" alt="Mix N' Breed Logo" class="h-8 w-8 mr-2">
-                Mix N’ Breed
-            </a>
-            <!-- Navigation Links -->
-            <div class="flex items-center space-x-6">
-                <a href="/about" class="text-gray-700 hover:text-orange-500 transition">About Us</a>
-                <a href="/docs" class="text-gray-700 hover:text-orange-500 transition">Docs</a>
-                <a href="{{ auth()->check() ? route('dogmatch.form') : route('login') }}" class="text-gray-700 hover:text-orange-500 transition">Get Started</a>
-                
-                <!-- Auth Buttons/Profile -->
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <!-- Logo and brand -->
+            <div class="flex items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/images/doggielogo.png" alt="Mix N' Breed Logo" class="h-8 w-8 sm:h-10 sm:w-10">
+                        <span class="ml-2 text-orange-500 font-bold text-lg sm:text-xl hidden xs:block">Mix N' Breed</span>
+                        <span class="ml-2 text-orange-500 font-bold text-sm block xs:hidden">MNB</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation Links -->
+            <div class="hidden md:flex md:items-center md:space-x-8">
+                <a href="/" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Home</a>
+                <a href="/about" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">About</a>
+                <a href="/docs" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Docs</a>
+                <a href="{{ auth()->check() ? route('dogmatch.form') : route('login') }}" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Get Started</a>
+            </div>
+
+            <!-- Desktop Auth Buttons -->
+            <div class="hidden md:flex md:items-center md:space-x-4">
                 @guest
-                    <a href="/login" class="px-4 py-2 rounded-md border border-orange-400 text-black font-semibold hover:bg-orange-50 transition">Login</a>
-                    <a href="/register" class="ml-2 px-4 py-2 rounded-md bg-orange-400 text-white font-semibold hover:bg-orange-500 transition shadow">Sign Up</a>
+                    <a href="/login" class="text-gray-700 hover:text-orange-500 px-4 py-2 rounded-md text-sm font-medium border border-gray-300 hover:border-orange-500 transition-all duration-200">
+                        Login
+                    </a>
+                    <a href="/register" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm">
+                        Sign Up
+                    </a>
                 @endguest
-                <!-- Admin Login Icon Link -->
-                <a href="{{ route('admin.login') }}" title="Admin Login" class="text-gray-700 hover:text-orange-600 ml-4">
-                    <i class="fas fa-lock fa-lg"></i>
-                    <!-- Or use SVG icon inline -->
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c.828 0 1.5.672 1.5 1.5S12.828 14 12 14s-1.5-.672-1.5-1.5S11.172 11 12 11z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v4m-6 4v6a6 6 0 0012 0v-6m-6 0V7a3 3 0 016 0v4" />
-                    </svg>
-
-                </a>
                 @auth
-                <div class="relative group">
-                    <button class="flex items-center focus:outline-none">
-                        <span class="inline-block w-9 h-9 rounded-full bg-gray-300 overflow-hidden">
-                            <img src="/images/dogprofile.jpg" alt="Doggy Profile">
-                        </span>
-                        <span class="ml-2 text-gray-700 font-semibold cursor-pointer">{{ Auth::user()->name }}</span>
-                    </button>
-                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-20
-                        hidden group-hover:block group-focus-within:block">
-                        <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
-                        <a href="{{ route('dogprofiles.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer">My Dogs</a>
-
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer">Logout</button>
-                        </form>
+                    <!-- Desktop User Menu - Hybrid Hover/Click -->
+                    <div class="relative">
+                        <button 
+                            id="desktop-user-menu-button"
+                            class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 focus:outline-none focus:text-orange-500 transition-colors duration-200 px-2 py-1 rounded-md hover:bg-orange-50"
+                            aria-expanded="false"
+                            aria-haspopup="true">
+                            <img class="h-8 w-8 rounded-full object-cover border-2 border-gray-200" src="/images/dogprofile.jpg" alt="Profile">
+                            <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
+                            <svg class="h-4 w-4 transition-transform duration-200" id="desktop-dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div 
+                            id="desktop-user-dropdown"
+                            class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 border border-gray-200 opacity-0 invisible transform scale-95 transition-all duration-200 ease-out z-50"
+                            role="menu">
+                            <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
+                                Your Profile
+                            </a>
+                            <a href="{{ route('dogprofiles.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
+                                My Dogs
+                            </a>
+                            <a href="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
+                                Settings
+                            </a>
+                            <hr class="my-1 border-gray-200">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
+                                    Sign out
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>                
                 @endauth
+
+                <!-- Admin Login Icon -->
+                <a href="{{ route('admin.login') }}" class="text-gray-400 hover:text-orange-500 p-2 rounded-md transition-colors duration-200" title="Admin Login">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-orange-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 transition-all duration-200" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <!-- Hamburger icon -->
+                    <svg class="block h-6 w-6" id="hamburger-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <!-- Close icon (hidden by default) -->
+                    <svg class="hidden h-6 w-6" id="close-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
         </div>
-    </nav>    
+    </div>
+
+    <!-- Mobile menu (hidden by default) -->
+    <div class="md:hidden hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+            <!-- Mobile Navigation Links -->
+            <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Home</a>
+            <a href="/about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">About</a>
+            <a href="/docs" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Docs</a>
+            <a href="{{ auth()->check() ? route('dogmatch.form') : route('login') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Get Started</a>
+        </div>
+
+        @guest
+            <!-- Mobile Auth Section -->
+            <div class="pt-4 pb-3 border-t border-gray-200">
+                <div class="flex items-center px-4 space-y-3 flex-col">
+                    <a href="/login" class="w-full text-center bg-white border border-orange-500 text-orange-500 hover:bg-orange-50 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200">
+                        Login
+                    </a>
+                    <a href="/register" class="w-full text-center bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+        @endguest
+
+        @auth
+            <!-- Mobile User Section -->
+            <div class="pt-4 pb-3 border-t border-gray-200">
+                <div class="flex items-center px-4">
+                    <div class="flex-shrink-0">
+                        <img class="h-10 w-10 rounded-full" src="/images/dogprofile.jpg" alt="Profile">
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-base font-medium text-gray-800">{{ Auth::user()->name }}</div>
+                        <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
+                    </div>
+                </div>
+                <div class="mt-3 space-y-1">
+                    <a href="/profile" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Your Profile</a>
+                    <a href="{{ route('dogprofiles.index') }}" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">My Dogs</a>
+                    <a href="/settings" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Settings</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">
+                            Sign out
+                        </button>
+                    </form>
+                </div>
+            </div>
+        @endauth
+
+        <!-- Mobile Admin Link -->
+        <div class="border-t border-gray-200 pt-2 pb-3">
+            <a href="{{ route('admin.login') }}" class="flex items-center px-4 py-2 text-base font-medium text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">
+                <svg class="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+                Admin Login
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Enhanced JavaScript for hybrid hover/click functionality -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Detect if device supports touch
+    const isTouchDevice = () => {
+        return (('ontouchstart' in window) ||
+               (navigator.maxTouchPoints > 0) ||
+               (navigator.msMaxTouchPoints > 0));
+    };
+
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            if (isOpen) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+    }
+
+    function openMobileMenu() {
+        mobileMenu.classList.remove('hidden');
+        hamburgerIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeMobileMenu() {
+        mobileMenu.classList.add('hidden');
+        hamburgerIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+    }
+
+    // Desktop user dropdown functionality (hybrid approach)
+    const desktopUserButton = document.getElementById('desktop-user-menu-button');
+    const desktopDropdown = document.getElementById('desktop-user-dropdown');
+    const dropdownArrow = document.getElementById('desktop-dropdown-arrow');
+
+    if (desktopUserButton && desktopDropdown) {
+        let isDropdownOpen = false;
+        let hoverTimeout;
+
+        // Show dropdown function
+        function showDropdown() {
+            if (hoverTimeout) clearTimeout(hoverTimeout);
+            isDropdownOpen = true;
+            desktopDropdown.classList.remove('opacity-0', 'invisible', 'scale-95');
+            desktopDropdown.classList.add('opacity-100', 'visible', 'scale-100');
+            dropdownArrow.style.transform = 'rotate(180deg)';
+            desktopUserButton.setAttribute('aria-expanded', 'true');
+        }
+
+        // Hide dropdown function
+        function hideDropdown() {
+            if (hoverTimeout) clearTimeout(hoverTimeout);
+            hoverTimeout = setTimeout(() => {
+                isDropdownOpen = false;
+                desktopDropdown.classList.remove('opacity-100', 'visible', 'scale-100');
+                desktopDropdown.classList.add('opacity-0', 'invisible', 'scale-95');
+                dropdownArrow.style.transform = 'rotate(0deg)';
+                desktopUserButton.setAttribute('aria-expanded', 'false');
+            }, 100); // Small delay to prevent accidental closes
+        }
+
+        if (isTouchDevice()) {
+            // Touch device: Use click to toggle
+            desktopUserButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                if (isDropdownOpen) {
+                    hideDropdown();
+                } else {
+                    showDropdown();
+                }
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!desktopUserButton.contains(e.target) && !desktopDropdown.contains(e.target)) {
+                    hideDropdown();
+                }
+            });
+        } else {
+            // Non-touch device: Use hover with click backup
+            desktopUserButton.addEventListener('mouseenter', showDropdown);
+            desktopDropdown.addEventListener('mouseenter', showDropdown);
+            
+            desktopUserButton.addEventListener('mouseleave', hideDropdown);
+            desktopDropdown.addEventListener('mouseleave', hideDropdown);
+
+            // Click as backup for non-touch devices
+            desktopUserButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (isDropdownOpen) {
+                    hideDropdown();
+                } else {
+                    showDropdown();
+                }
+            });
+        }
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (mobileMenuButton && mobileMenu && 
+            !mobileMenuButton.contains(event.target) && 
+            !mobileMenu.contains(event.target)) {
+            closeMobileMenu();
+        }
+    });
+
+    // Close mobile menu on window resize if desktop view
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 768) { // md breakpoint
+            closeMobileMenu();
+        }
+    });
+
+    // Keyboard navigation for accessibility
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (!mobileMenu.classList.contains('hidden')) {
+                closeMobileMenu();
+            }
+            if (isDropdownOpen) {
+                hideDropdown();
+            }
+        }
+    });
+});
+</script>
 
     <main>
         @yield('content')
-            <!-- Footer -->
-    <footer class="bg-orange-100 border-t-2 border-orange-100 mt-16">
+            <!-- Footer content contains information such as, contains logo, quick links, resources, and contact info -->
+    <footer class="bg-orange-100 border-t-2 border-orange-100">
             <div class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Logo & About -->
                 <div class="flex flex-col items-center md:items-start">
                     <img src="{{ asset('images/doggielogo.png') }}" alt="Mix N' Breed Logo" class="w-14 h-14 mb-2">
                     <span class="font-bold text-orange-700 text-xl mb-2">Mix N' Breed</span>
@@ -78,7 +327,6 @@
                         Your guide to responsible and fun dog breeding! 🐾
                     </p>
                 </div>
-                <!-- Quick Links -->
                 <div>
                     <h3 class="font-semibold text-orange-700 mb-3">Quick Links</h3>
                     <ul class="space-y-2 text-gray-700 text-sm">
@@ -89,7 +337,6 @@
                         <li><a href="#" class="hover:text-orange-600">Contact Us</a></li>
                     </ul>
                 </div>
-                <!-- Resources -->
                 <div>
                     <h3 class="font-semibold text-orange-700 mb-3">Resources</h3>
                     <ul class="space-y-2 text-gray-700 text-sm">
@@ -99,7 +346,6 @@
                         <li><a href="#" class="hover:text-orange-600">FAQs</a></li>
                     </ul>
                 </div>
-                <!-- Contact & Social -->
                 <div>
                     <h3 class="font-semibold text-orange-700 mb-3">Connect</h3>
                     <ul class="space-y-2 text-gray-700 text-sm">

@@ -20,10 +20,8 @@ class DogMatchController extends Controller
     {
         try {
             $request->validate([
-                'dog1' => 'nullable|image|mimes:jpeg,png,jpg',
-                'dog2' => 'nullable|image|mimes:jpeg,png,jpg',
-                'profile1' => 'nullable|exists:dog_profiles,id',
-                'profile2' => 'nullable|exists:dog_profiles,id',
+                'selectedProfiles' => 'required|array|size:2',
+                'selectedProfiles.*' => 'required|exists:dog_profiles,id',
             ]);
 
             if (!$request->hasFile('dog1') && !$request->profile1) {
@@ -38,30 +36,28 @@ class DogMatchController extends Controller
             $dog1Name = "{$sessionId}_dog1.png";
             $dog2Name = "{$sessionId}_dog2.png";
 
+            // Get the selected profiles
+            $profile1 = DogProfile::findOrFail($request->selectedProfiles[0]);
+            $profile2 = DogProfile::findOrFail($request->selectedProfiles[1]);
+
             // Dog 1 image
-            if ($request->hasFile('dog1')) {
-                Storage::disk('vast')->put($dog1Name, file_get_contents($request->file('dog1')));
-            } elseif ($request->profile1) {
-                $profile1 = \App\Models\DogProfile::find($request->profile1);
-                if ($profile1 && $profile1->image) {
-                    $imagePath = storage_path('app/public/' . $profile1->image);
-                    Storage::disk('vast')->put($dog1Name, file_get_contents($imagePath));
-                } else {
-                    throw new \Exception('Selected profile for Dog 1 has no image.');
+            if ($profile1 && $profile1->image) {
+                $imagePath = storage_path('app/public/' . $profile1->image);
+                if (!Storage::disk('vast')->put($dog1Name, file_get_contents($imagePath))) {
+                    throw new \Exception('Failed to process image for first dog.');
                 }
+            } else {
+                throw new \Exception('First selected profile has no image.');
             }
 
             // Dog 2 image
-            if ($request->hasFile('dog2')) {
-                Storage::disk('vast')->put($dog2Name, file_get_contents($request->file('dog2')));
-            } elseif ($request->profile2) {
-                $profile2 = \App\Models\DogProfile::find($request->profile2);
-                if ($profile2 && $profile2->image) {
-                    $imagePath = storage_path('app/public/' . $profile2->image);
-                    Storage::disk('vast')->put($dog2Name, file_get_contents($imagePath));
-                } else {
-                    throw new \Exception('Selected profile for Dog 2 has no image.');
+            if ($profile2 && $profile2->image) {
+                $imagePath = storage_path('app/public/' . $profile2->image);
+                if (!Storage::disk('vast')->put($dog2Name, file_get_contents($imagePath))) {
+                    throw new \Exception('Failed to process image for second dog.');
                 }
+            } else {
+                throw new \Exception('Second selected profile has no image.');
             }
 
             // load and update the workflow JSON
@@ -88,21 +84,60 @@ class DogMatchController extends Controller
                 }
             }
 
-            //ComfyUI via API
+            // ComfyUI via API
             $response = Http::post('http://1.208.108.242:8188/prompt', [
                 'prompt' => $workflow,
                 'client_id' => $sessionId,
+                'extra_data' => [
+                    'dog1_breed' => $profile1->breed,
+                    'dog2_breed' => $profile2->breed,
+                    'dog1_traits' => $profile1->traits,
+                    'dog2_traits' => $profile2->traits
+                ]
             ]);
 
             if ($response->successful()) {
                 flash()->success('Fusion triggered via API! 🐶 Your mixed breed is on the way.');
-                return redirect()->route('dogmatch.form');
+
+                // Return additional data for Livewire to update the UI
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Processing breed mix...',
+                    'session_id' => $sessionId,
+                    'dog1_info' => [
+                        'breed' => $profile1->breed,
+                        'traits' => $profile1->traits
+                    ],
+                    'dog2_info' => [
+                        'breed' => $profile2->breed,
+                        'traits' => $profile2->traits
+                    ]
+                ]);
             } else {
                 throw new \Exception('API trigger failed: ' . $response->body());
             }
         } catch (\Exception $e) {
             flash()->error('Fusion failed: ' . $e->getMessage());
-            return back();
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 422);
+        }
+    }
+
+    // Add a method to check processing status if needed
+    public function checkStatus($sessionId)
+    {
+        try {
+            $response = Http::get('http://1.208.108.242:8188/history/' . $sessionId);
+
+            if ($response->successful()) {
+                return response()->json($response->json());
+            }
+
+            return response()->json(['status' => 'processing']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

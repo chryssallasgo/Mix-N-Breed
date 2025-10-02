@@ -45,7 +45,7 @@ Route::view('/about', 'about')->name('about');
 
 //admin routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/admindashboard', [AdminUserController::class, 'admindashboard'])->name('admindashboard');
+    Route::get('/admindashboard', [AdminUserController::class, 'dashboard'])->name('admindashboard');
 
     Route::resource('users', AdminUserController::class)->except(['create', 'store', 'show']);
     Route::resource('dogprofiles', AdminDogProfileController::class)->except(['create', 'store', 'show']);

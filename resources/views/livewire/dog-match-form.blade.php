@@ -40,7 +40,9 @@
                             </a>
                         </div>
                     @else
-                        <div class="max-h-[500px] overflow-y-auto">
+                        <div class="max-h-[500px] [scrollbar-gutter:stable] 
+                                    scrollbar-thin scrollbar-thumb-orange-200 scrollbar-track-transparent
+                                    hover:scrollbar-thumb-orange-300">
                             <div class="grid grid-cols-2 gap-4">
                                 @foreach($profiles as $profile)
                                     <div wire:click="toggleProfileSelection({{ $profile->id }})"
