@@ -1,0 +1,28 @@
+1. Dashboard/Landing Page
+    Purpose: Welcome page with platform overview
+    Key Elements: Hero section, statistics, featured content, CTA buttons
+    Layout: Two-column hero, three-column stats grid
+    Content: Platform intro, user statistics, breeding guides
+2. Dog Profile List (Current file reference)
+    Purpose: Display user's dog profiles with search
+    Key Elements: Profile cards grid, search bar, action buttons
+    Layout: 2-column grid (desktop), 1-column (mobile)
+    Actions: View, Edit, Delete, Add New, Mix Breed
+3. Dog Profile Create/Edit Form
+    Purpose: Add or modify dog profile information
+    Key Elements: Form fields, image upload, validation messages
+    Fields: Name, breed, age, size, weight, health info, traits, contact
+    Layout: Single column form with sections
+4. Dog Breed Mixing Interface
+    Purpose: AI-powered breed mixing and results
+    Key Elements: Dog selection cards, result preview, mixing button
+    Layout: Split screen - selection grid + result display
+    Interaction: Card selection (max 2), hover states, loading states
+5. Authentication Pages
+    Login Page: Email/password form
+    Register Page: User registration form
+    Admin Login: Separate admin access
+6. Navigation Components
+    Desktop Header: Logo, nav links, user dropdown
+    Mobile Menu: Hamburger menu, collapsible navigation
+    User Dropdown: Profile options, logout

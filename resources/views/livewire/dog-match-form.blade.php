@@ -1,15 +1,14 @@
 <div class="min-h-screen flex items-center justify-center bg-orange-50 bg-[url('/images/paws-bg.png')] bg-cover">
-    <div class="grid grid-cols-2 gap-8 bg-white p-8 rounded-2xl shadow-2xl w-full max-w-6xl border-2 border-orange-200">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-8 rounded-2xl shadow-2xl w-full max-w-6xl border-2 border-orange-200">
         {{-- Result Display --}}
         <div class="flex flex-col">
             {{-- Header --}}
             <div class="flex flex-col items-center mb-6">
-                <img src="{{ asset('images/doggielogo.png') }}" alt="Dog Match Logo" class="w-20 h-20 mb-2 drop-shadow-lg">
-                <h2 class="text-3xl font-extrabold text-orange-700 mb-2 tracking-tight">Mix Two Breeds!</h2>
-                <p class="text-gray-600 text-center">Select two dog profiles to see their mix. 🐶✨</p>
+
+                <h2 class="text-2xl md:text-3xl font-extrabold text-orange-700 mb-2 tracking-tight">Mix Two Breeds!<img src="{{ asset('images/doggielogo.png') }}" alt="Dog Match Logo" class="w-10 h-10 mb-2 drop-shadow-lg"></h2>
+                <p class="text-sm md:text-base text-gray-600 text-center">Select two dog profiles to see their mix.</p>
             </div>
             <div class="flex-1 flex flex-col items-center justify-start pt-8">
-                <h3 class="text-2xl font-bold text-orange-700 mb-4">Resulting Mix</h3>
                 <img src="{{ $resultImage ?? asset('images/doggielogoprev.png') }}" 
                      class="w-40 h-40 rounded-full object-cover border-2 border-orange-300 shadow-inner mb-4">
                 <div class="text-sm text-gray-700 space-y-1">
@@ -26,12 +25,13 @@
             <form wire:submit.prevent="mixBreeds" class="space-y-6">
                 {{-- Selection Counter --}}
                 <div class="flex justify-between items-center mb-4">
-                    <label class="block font-semibold text-orange-700">🐾 Select Two Dogs</label>
+                    <label class="block font-semibold text-orange-700"> Select Two Dogs</label>
                     <span class="text-sm text-gray-600">Selected: {{ $selectedCount }}/2</span>
                 </div>
 
                 {{-- Dog Profile Selection Grid --}}
-                <div class="bg-white rounded-lg shadow p-6">
+                <div class="bg-white rounded-lg shadow p-6 h-100 flex flex-col">
+                    {{-- Profiles Grid --}}
                     @if(!$hasProfiles)
                         <div class="text-center py-4">
                             <p class="text-gray-600 mb-2">You haven't made a dog profile yet.</p>
@@ -40,7 +40,7 @@
                             </a>
                         </div>
                     @else
-                        <div class="max-h-[500px] [scrollbar-gutter:stable] 
+                        <div class="max-h-[600px] [scrollbar-gutter:stable] 
                                     scrollbar-thin scrollbar-thumb-orange-200 scrollbar-track-transparent
                                     hover:scrollbar-thumb-orange-300">
                             <div class="grid grid-cols-2 gap-4">
@@ -52,16 +52,16 @@
                                         <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
                                             <img src="{{ asset('storage/'.$profile->image) }}" 
                                                  alt="{{ $profile->name }}"
-                                                 class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                                                 class="w-[256px] h-[164px] object-cover transition-transform duration-300 group-hover:scale-110">
                                             
                                             {{-- Hover Info Overlay --}}
-                                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-clip-padding backdrop-filter backdrop-blur bg-opacity-5 backdrop-saturate-100 backdrop-contrast-100 {{ $this->isProfileSelected($profile->id) ? 'opacity-100' : '' }}">
                                                 <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
                                                     <p class="font-medium mb-1">{{ $profile->name }}</p>
                                                     <p class="text-sm">{{ $profile->breed }}</p>
                                                     <div class="mt-2 text-xs space-y-1">
                                                         <p>Age: {{ $profile->age }}</p>
-                                                        <p>Size: {{ $profile->size }}</p>
+                                                        <p>Weight: {{ $profile->weight }}</p>
                                                         <p>Health: {{ $profile->health_status }}</p>
                                                     </div>
                                                 </div>
@@ -71,7 +71,7 @@
                                         {{-- Selection Indicator --}}
                                         @if($this->isProfileSelected($profile->id))
                                             <div class="absolute top-2 right-2 bg-orange-500 text-white px-2 py-1 rounded-full text-xs shadow-lg">
-                                                Selected ({{ array_search($profile->id, $selectedProfiles) + 1 }}/2)
+                                                ({{ array_search($profile->id, $selectedProfiles) + 1 }}/2)
                                             </div>
                                         @endif
                                     </div>

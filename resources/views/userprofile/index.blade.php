@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    @livewire('dog-profile-component')
+    @livewire('user-profile')
 @endsection
-
-
-

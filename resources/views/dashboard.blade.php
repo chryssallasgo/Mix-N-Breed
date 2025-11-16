@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="pl-5 pr-5 relative bg-linear-to-r from-orange-400 to-orange-600 py-10 overflow-hidden">
+
+    <section class="pl-5 pr-5 relative bg-gradient-to-r from-amber-500  to-orange-600 py-10 overflow-hidden"> <!-- or image bg-[url('/public/images/gr.jpg')] -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-            <!-- Left Column: Text Content -->
             <div class="space-y-6">
                 <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight">
                     You know your dog.<br>
@@ -112,10 +112,10 @@
             <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Discover some of the most beloved combinations from our community</p>
             
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Breed Card 1 -->
+                <!-- breed_cards -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="relative h-48">
-                        <img src="http://static.photos/dog/640x360/2" alt="Goldendoodle" class="w-full h-full object-cover">
+                        <img src="{{ asset('images/goldendoodle.jpg') }}" alt="Goldendoodle" class="w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                             <h3 class="text-white font-bold text-xl">Goldendoodle</h3>
                             <p class="text-white text-opacity-80">Golden Retriever + Poodle</p>
@@ -132,11 +132,9 @@
                         <p class="text-gray-600 text-sm">85% compatibility score</p>
                     </div>
                 </div>
-                
-                <!-- Breed Card 2 -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="relative h-48">
-                        <img src="http://static.photos/dog/640x360/3" alt="Pomsky" class="w-full h-full object-cover">
+                        <img src="{{ asset('images/pomsky.jpg') }}" alt="Pomsky" class="w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                             <h3 class="text-white font-bold text-xl">Pomsky</h3>
                             <p class="text-white text-opacity-80">Pomeranian + Husky</p>
@@ -153,11 +151,9 @@
                         <p class="text-gray-600 text-sm">78% compatibility score</p>
                     </div>
                 </div>
-                
-                <!-- Breed Card 3 -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="relative h-48">
-                        <img src="http://static.photos/dog/640x360/4" alt="Chug" class="w-full h-full object-cover">
+                        <img src="{{ asset('images/chug.jpg') }}" alt="Chug" class="w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                             <h3 class="text-white font-bold text-xl">Chug</h3>
                             <p class="text-white text-opacity-80">Chihuahua + Pug</p>
@@ -177,9 +173,9 @@
             </div>
             
             <div class="text-center text-amber-600 mt-10">
-                <button class="px-6 py-3 border-2 border-amber-600 rounded-lg font-semibold hover:bg-amber-600 hover:text-white transition">
+                <a href="{{ url('/marketplace') }}" class="px-6 py-3 border-2 border-amber-600 rounded-lg font-semibold hover:bg-amber-600 hover:text-white transition">
                     Explore More Mixes
-                </button>
+                </a>
             </div>
         </div>
     </section>

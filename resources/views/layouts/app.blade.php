@@ -13,7 +13,7 @@
 
 <body class="bg-orange-50 font-sans">
 <nav class="bg-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <!-- Logo and brand -->
             <div class="flex items-center">
@@ -21,17 +21,18 @@
                     <a href="/" class="flex items-center">
                         <img src="/images/doggielogo.png" alt="Mix N' Breed Logo" class="h-8 w-8 sm:h-10 sm:w-10">
                         <span class="ml-2 text-orange-500 font-bold text-lg sm:text-xl hidden xs:block">Mix N' Breed</span>
-                        <span class="ml-2 text-orange-500 font-bold text-sm block xs:hidden">MNB</span>
+                        <span class="ml-2 text-orange-500 font-bold text-sm block xs:hidden">Mix N' Breed</span>
                     </a>
                 </div>
             </div>
 
             <!-- Desktop Navigation Links -->
-            <div class="hidden md:flex md:items-center md:space-x-8">
+            <div class="hidden md:flex md:flex-grow justify-end md:items-center md:space-x-8">
                 <a href="/" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Home</a>
                 <a href="/about" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">About</a>
                 <a href="/docs" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Docs</a>
                 <a href="{{ auth()->check() ? route('dogmatch.form') : route('login') }}" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Get Started</a>
+                <a href="{{ route('marketplace.index') }}" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Marketplace</a>
             </div>
 
             <!-- Desktop Auth Buttons -->
@@ -46,7 +47,6 @@
                 @endguest
 
                 @auth
-                    <!-- Desktop User Menu - Hybrid Hover/Click -->
                     <div class="relative">
                         <button 
                             id="desktop-user-menu-button"
@@ -60,12 +60,12 @@
                             </svg>
                         </button>
                         
-                        <!-- Dropdown Menu -->
+                        <!-- dropdown_menu -->
                         <div 
                             id="desktop-user-dropdown"
                             class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 border border-gray-200 opacity-0 invisible transform scale-95 transition-all duration-200 ease-out z-50"
                             role="menu">
-                            <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
+                            <a href="{{ route('userprofile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
                                 Your Profile
                             </a>
                             <a href="{{ route('dogprofiles.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
@@ -85,7 +85,7 @@
                     </div>
                 @endauth
 
-                <!-- Admin Login Icon -->
+                <!-- admin_login -->
                 <a href="{{ route('admin.login') }}" class="text-gray-400 hover:text-orange-500 p-2 rounded-md transition-colors duration-200" title="Admin Login">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
@@ -93,15 +93,14 @@
                 </a>
             </div>
 
-            <!-- Mobile menu button -->
+            <!-- mobile_section -->
             <div class="md:hidden flex items-center">
                 <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-orange-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500 transition-all duration-200" aria-expanded="false">
                     <span class="sr-only">Open main menu</span>
-                    <!-- Hamburger icon -->
+                    <!--hamburger_icon -->
                     <svg class="block h-6 w-6" id="hamburger-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
-                    <!-- Close icon (hidden by default) -->
                     <svg class="hidden h-6 w-6" id="close-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -172,17 +171,15 @@
     </div>
 </nav>
 
-<!-- Enhanced JavaScript for hybrid hover/click functionality -->
+<!-- hover/click functionality -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Detect if device supports touch
     const isTouchDevice = () => {
         return (('ontouchstart' in window) ||
                (navigator.maxTouchPoints > 0) ||
                (navigator.msMaxTouchPoints > 0));
     };
 
-    // Mobile menu functionality
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const hamburgerIcon = document.getElementById('hamburger-icon');
@@ -214,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileMenuButton.setAttribute('aria-expanded', 'false');
     }
 
-    // Desktop user dropdown functionality (hybrid approach)
+    // dropdown functionality 
     const desktopUserButton = document.getElementById('desktop-user-menu-button');
     const desktopDropdown = document.getElementById('desktop-user-dropdown');
     const dropdownArrow = document.getElementById('desktop-dropdown-arrow');
@@ -223,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function() {
         let isDropdownOpen = false;
         let hoverTimeout;
 
-        // Show dropdown function
         function showDropdown() {
             if (hoverTimeout) clearTimeout(hoverTimeout);
             isDropdownOpen = true;
@@ -242,11 +238,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 desktopDropdown.classList.add('opacity-0', 'invisible', 'scale-95');
                 dropdownArrow.style.transform = 'rotate(0deg)';
                 desktopUserButton.setAttribute('aria-expanded', 'false');
-            }, 100); // Small delay to prevent accidental closes
+            }, 100); 
         }
 
         if (isTouchDevice()) {
-            // Touch device: Use click to toggle
             desktopUserButton.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -257,22 +252,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     showDropdown();
                 }
             });
-
-            // Close dropdown when clicking outside
             document.addEventListener('click', function(e) {
                 if (!desktopUserButton.contains(e.target) && !desktopDropdown.contains(e.target)) {
                     hideDropdown();
                 }
             });
         } else {
-            // Non-touch device: Use hover with click backup
             desktopUserButton.addEventListener('mouseenter', showDropdown);
             desktopDropdown.addEventListener('mouseenter', showDropdown);
             
             desktopUserButton.addEventListener('mouseleave', hideDropdown);
             desktopDropdown.addEventListener('mouseleave', hideDropdown);
 
-            // Click as backup for non-touch devices
             desktopUserButton.addEventListener('click', function(e) {
                 e.preventDefault();
                 if (isDropdownOpen) {
@@ -284,7 +275,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Close mobile menu when clicking outside
     document.addEventListener('click', function(event) {
         if (mobileMenuButton && mobileMenu && 
             !mobileMenuButton.contains(event.target) && 
@@ -293,14 +283,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Close mobile menu on window resize if desktop view
+
     window.addEventListener('resize', function() {
-        if (window.innerWidth >= 768) { // md breakpoint
+        if (window.innerWidth >= 768) { 
             closeMobileMenu();
         }
     });
 
-    // Keyboard navigation for accessibility
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             if (!mobileMenu.classList.contains('hidden')) {
@@ -333,17 +322,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         <li><a href="{{ url('/') }}" class="hover:text-orange-600">Home</a></li>
                         <li><a href="{{ route('dogprofiles.index') }}" class="hover:text-orange-600">Your Dogs</a></li>
                         <li><a href="{{ route('dogmatch.form') }}" class="hover:text-orange-600">Mix Breeds</a></li>
-                        <li><a href="#" class="hover:text-orange-600">Health Tips</a></li>
-                        <li><a href="#" class="hover:text-orange-600">Contact Us</a></li>
+                        <li><a href="{{ route('contactus') }}" class="hover:text-orange-600">Contact Us</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="font-semibold text-orange-700 mb-3">Resources</h3>
                     <ul class="space-y-2 text-gray-700 text-sm">
                         <li><a href="#" class="hover:text-orange-600">Dog Breeding Guide</a></li>
-                        <li><a href="#" class="hover:text-orange-600">Compatibility Checker</a></li>
                         <li><a href="#" class="hover:text-orange-600">Breeder Tips</a></li>
-                        <li><a href="#" class="hover:text-orange-600">FAQs</a></li>
+                        <li><a href="{{ url('/docs') }}" class="hover:text-orange-600">FAQs</a></li>
                     </ul>
                 </div>
                 <div>

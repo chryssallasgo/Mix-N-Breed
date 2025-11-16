@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'region_id',
     ];
 
     /**
@@ -50,5 +51,14 @@ class User extends Authenticatable
     public function dogProfiles()
     {
         return $this->hasMany(DogProfile::class);
+    }
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function marketplaceItems()
+    {
+        return $this->hasMany(MarketplaceItem::class);
     }
 }
