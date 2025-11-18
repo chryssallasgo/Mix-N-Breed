@@ -14,9 +14,8 @@ Welcome to **Mix N' Breed**! An innovative Laravel + Livewire application that u
 - 🛍️ **Marketplace** - Browse and list dog profiles for adoption, breeding, or sale
 - 🎓 **Educational Content** - Learn about dog breeding compatibility and best practices
 - 👤 **User Authentication** - Secure user accounts with profile picture upload support
-- 🔔 **Flash Notifications** - Custom-styled, auto-dismissible success/error messages
+- 🔔 **Flash Notifications** - PHP Flasher with Toastr and Noty for elegant notifications
 - 🔧 **Admin Panel** - Administrative tools for platform management
-- 🗑️ **Soft Deletes** - Non-destructive deletion with data recovery capabilities
 
 ---
 
@@ -40,14 +39,11 @@ cd Mix-N-Breed/mixnbreed
 ### 2. Install Dependencies
 
 ```bash
-# Install PHP dependencies
+# Install PHP dependencies (includes PHP Flasher)
 composer install
 
 # Install JavaScript dependencies
 npm install
-
-# Install Alpine.js (for interactive components)
-npm install alpinejs
 ```
 
 ### 3. Environment Setup
@@ -158,8 +154,10 @@ mixnbreed/
 │   │       ├── DogProfileComponent.php
 │   │       └── UserProfile.php
 │   └── Models/                   # Eloquent models
-│       ├── DogProfile.php        # With SoftDeletes
+│       ├── DogProfile.php
 │       └── User.php
+├── config/
+│   └── flasher.php               # PHP Flasher configuration
 ├── database/
 │   ├── migrations/               # Database migrations
 │   │   └── *_add_profile_picture_to_users_table.php
@@ -168,10 +166,8 @@ mixnbreed/
 │   ├── css/
 │   │   └── app.css              # TailwindCSS + custom animations
 │   ├── js/
-│   │   └── app.js               # Alpine.js integration
+│   │   └── app.js               # Vite configuration
 │   └── views/
-│       ├── components/
-│       │   └── flash-message.blade.php  # Reusable flash notifications
 │       ├── layouts/
 │       │   └── app.blade.php    # Main layout with responsive navbar
 │       ├── dogprofiles/
@@ -197,13 +193,13 @@ mixnbreed/
 ## 🔧 Technology Stack
 
 - **Backend**: Laravel 10, PHP 8.1+
-- **Frontend**: Livewire 3, TailwindCSS 3, Alpine.js
+- **Frontend**: Livewire 3, TailwindCSS 3
 - **Database**: MySQL 8.0+
 - **Build Tools**: Vite 5, npm
 - **Authentication**: Laravel Breeze
 - **File Storage**: Laravel Storage with public disk
 - **AI Integration**: ComfyUI API
-- **Notifications**: Custom flash message component with Alpine.js
+- **Notifications**: PHP Flasher with Toastr and Noty
 
 ---
 
@@ -214,7 +210,6 @@ mixnbreed/
 - Track breed, age, size, weight, health status, and traits
 - Vaccination status with 3 states: "Up to date", "Not up to date", "Unknown"
 - Marketplace visibility toggle for adoptions/sales
-- Soft delete support for profile recovery
 - Manage multiple dog profiles per user
 
 ### AI Breed Mixing
@@ -247,13 +242,13 @@ mixnbreed/
 - Adaptive layouts for all screen sizes
 - Sticky navigation with proper z-indexing
 
-### Flash Notifications
-- Custom component with Alpine.js
-- Color-coded messages (Success: Orange, Error: Red, Warning: Yellow)
-- Auto-dismiss after 5 seconds
-- Manual close button
-- Positioned above navbar (z-index hierarchy)
-- Smooth transitions and animations
+### Flash Notifications (PHP Flasher)
+- Elegant notifications using Toastr and Noty libraries
+- Multiple notification styles (success, error, warning, info)
+- Auto-dismiss with customizable duration
+- Position customization (top-right, bottom-center, etc.)
+- Queue support for multiple notifications
+- Livewire integration for AJAX requests
 
 ### Educational Resources
 - Dog breeding compatibility guides
@@ -317,51 +312,74 @@ php artisan tinker
 > App\Models\User::all();
 ```
 
-### Working with Soft Deletes
-
-```bash
-# In Tinker, restore soft-deleted records
-php artisan tinker
-> $profile = App\Models\DogProfile::withTrashed()->find(1);
-> $profile->restore();
-
-# Permanently delete
-> $profile->forceDelete();
-
-# Get only trashed records
-> App\Models\DogProfile::onlyTrashed()->get();
-```
-
 ---
 
-## 🎨 Custom Components
+## 🎨 Flash Notifications with PHP Flasher
 
-### Flash Message Component
+### Installation
 
-Located at `resources/views/components/flash-message.blade.php`
+PHP Flasher is already included in `composer.json`. After running `composer install`, it's ready to use.
 
-**Usage in Controllers:**
+### Usage in Controllers
+
 ```php
-// Success message (orange theme)
-return redirect()->route('dogprofiles.index')->with('success', 'Profile created successfully!');
+// Success notification
+flash()->success('Profile created successfully!');
 
-// Error message (red theme)
-return back()->with('error', 'Something went wrong!');
+// Error notification
+flash()->error('Something went wrong!');
 
-// Warning message (yellow theme)
-return redirect()->route('login')->with('warning', 'Please login first!');
+// Warning notification
+flash()->warning('Please verify your email address.');
+
+// Info notification
+flash()->info('Your session will expire in 5 minutes.');
+
+// With redirect
+return redirect()->route('dogprofiles.index')
+    ->with('success', 'Dog profile updated successfully!');
 ```
 
-**Features:**
-- Auto-dismiss after 5 seconds
-- Manual close button
-- Alpine.js powered transitions
-- High z-index (z-[100]) to appear above navbar
-- Responsive positioning
+### Usage in Livewire Components
 
-### Paw-gress Bar
+```php
+public function save()
+{
+    // Your save logic...
+    
+    flash()->success('Changes saved successfully!');
+    
+    // Or with Livewire flash
+    session()->flash('success', 'Profile updated!');
+}
+```
 
-Custom loading animation for AI breed mixing, with animated gradient and randomized paw print rotations.
+### Configuration
+
+Customize notifications in `config/flasher.php`:
+
+```php
+return [
+    'default' => 'toastr', // or 'noty'
+    
+    'toastr' => [
+        'options' => [
+            'position' => 'top-right',
+            'timeout' => 5000,
+            'close_button' => true,
+            'progress_bar' => true,
+        ],
+    ],
+    
+    'noty' => [
+        'options' => [
+            'layout' => 'topRight',
+            'timeout' => 5000,
+            'theme' => 'mint',
+        ],
+    ],
+];
+```
 
 ---
 
@@ -369,7 +387,7 @@ Custom loading animation for AI breed mixing, with animated gradient and randomi
 
 ### Key Models
 - `app/Models/User.php` - User model with profile_picture support
-- `app/Models/DogProfile.php` - Dog profile model with SoftDeletes trait
+- `app/Models/DogProfile.php` - Dog profile model
 
 ### Key Controllers
 - `app/Http/Controllers/DashboardController.php` - Dashboard with statistics
@@ -377,18 +395,18 @@ Custom loading animation for AI breed mixing, with animated gradient and randomi
 - `app/Http/Controllers/DogProfileController.php` - CRUD for dog profiles
 
 ### Key Views
-- `resources/views/layouts/app.blade.php` - Main layout with navbar and flash messages
-- `resources/views/components/flash-message.blade.php` - Reusable notification component
+- `resources/views/layouts/app.blade.php` - Main layout with navbar
 - `resources/views/dashboard.blade.php` - Statistics dashboard
 - `resources/views/userprofile/edit.blade.php` - User settings page
 
-### Routes
+### Configuration Files
+- `config/flasher.php` - PHP Flasher notification settings
 - `routes/web.php` - All web routes with middleware groups
+- `.env` - Environment configuration
 
 ### Frontend Assets
 - `resources/css/app.css` - TailwindCSS with custom animations
-- `resources/js/app.js` - Alpine.js configuration
-- `tailwind.config.js` - Tailwind configuration (if using custom animations)
+- `resources/js/app.js` - Vite configuration
 
 ---
 
@@ -421,9 +439,11 @@ Custom loading animation for AI breed mixing, with animated gradient and randomi
    - Ensure database exists: `CREATE DATABASE mixnbreed_db;`
    - Test connection in Tinker: `php artisan tinker` then `DB::connection()->getPdo();`
 
-5. **Flash Messages Behind Navbar**
-   - Ensure `<x-flash-message />` is included in `layouts/app.blade.php`
-   - Check z-index values (flash: z-[100], navbar: z-50)
+5. **Flash Notifications Not Appearing**
+   - Clear config cache: `php artisan config:clear`
+   - Check if `@flasher_render` is in your layout file
+   - Verify `config/flasher.php` settings
+   - Ensure JavaScript assets are loaded
 
 6. **Profile Picture Not Uploading**
    - Verify storage link exists: `ls -la public/storage`
@@ -439,11 +459,6 @@ Custom loading animation for AI breed mixing, with animated gradient and randomi
    - Clear route cache: `php artisan route:clear`
    - Verify route exists: `php artisan route:list --name=route.name`
    - Check for duplicate routes with same path
-
-9. **Soft Delete Issues (Column 'deleted_at' Not Found)**
-   - Ensure migration is run: `php artisan migrate`
-   - Check model has `use SoftDeletes;` trait
-   - Verify column exists: Check in database or Tinker
 
 ---
 
@@ -554,7 +569,7 @@ If you encounter any issues or have questions:
 - Laravel community for the amazing framework
 - Livewire for reactive components without JavaScript complexity
 - TailwindCSS for utility-first styling
-- Alpine.js for lightweight JavaScript interactivity
+- PHP Flasher for elegant notification system
 - ComfyUI for AI image generation capabilities
 - All contributors and testers
 
@@ -565,14 +580,20 @@ If you encounter any issues or have questions:
 ### Recent Updates
 
 - ✅ Added user profile picture upload functionality
-- ✅ Implemented soft deletes for dog profiles
-- ✅ Created reusable flash message component with Alpine.js
+- ✅ Integrated PHP Flasher with Toastr and Noty for notifications
 - ✅ Fixed dashboard statistics to show all users' dog profiles
 - ✅ Improved dog profile edit form (vaccination status & date fields)
 - ✅ Added custom "Paw-gress Bar" loading animation
 - ✅ Enhanced responsive navigation with profile picture support
 - ✅ Implemented proper z-index hierarchy for overlays
 - ✅ Added marketplace functionality for dog profiles
+
+### Planned Features
+
+- 🔄 Soft delete implementation for dog profiles (coming soon)
+- 🔄 Advanced search and filtering for marketplace
+- 🔄 Email notifications for matches
+- 🔄 Social sharing features
 
 ---
 
