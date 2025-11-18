@@ -12,12 +12,12 @@
 </head>
 
 <body class="bg-orange-50 font-sans">
-<nav class="bg-white shadow-lg sticky top-0 z-50">
+<nav class="bg-white shadow-lg sticky top-0 z-10">
     <div class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <!-- Logo and brand -->
             <div class="flex items-center">
-                <div class="flex-shrink-0 flex items-center">
+                <div class="shrink-0 flex items-center">
                     <a href="/" class="flex items-center">
                         <img src="/images/doggielogo.png" alt="Mix N' Breed Logo" class="h-8 w-8 sm:h-10 sm:w-10">
                         <span class="ml-2 text-orange-500 font-bold text-lg sm:text-xl hidden xs:block">Mix N' Breed</span>
@@ -27,7 +27,7 @@
             </div>
 
             <!-- Desktop Navigation Links -->
-            <div class="hidden md:flex md:flex-grow justify-end md:items-center md:space-x-8">
+            <div class="hidden md:flex md:grow justify-end md:items-center md:space-x-8">
                 <a href="/" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Home</a>
                 <a href="/about" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">About</a>
                 <a href="/docs" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Docs</a>
@@ -53,9 +53,17 @@
                             class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 focus:outline-none focus:text-orange-500 transition-colors duration-200 px-2 py-1 rounded-md hover:bg-orange-50"
                             aria-expanded="false"
                             aria-haspopup="true">
-                            <img class="h-8 w-8 rounded-full object-cover border-2 border-gray-200" src="/images/dogprofile.jpg" alt="Profile">
+                            @if(Auth::user()->profile_picture)
+                                <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" 
+                                    alt="{{ Auth::user()->name }}" 
+                                    class="h-8 w-8 rounded-full object-cover border-2 border-orange-300">
+                            @else
+                                <div class="h-8 w-8 rounded-full bg-orange-200 flex items-center justify-center border-2 border-orange-300">
+                                    <span class="text-sm font-bold text-orange-600">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+                                </div>
+                            @endif
                             <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
-                            <svg class="h-4 w-4 transition-transform duration-200" id="desktop-dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
@@ -65,14 +73,14 @@
                             id="desktop-user-dropdown"
                             class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 border border-gray-200 opacity-0 invisible transform scale-95 transition-all duration-200 ease-out z-50"
                             role="menu">
-                            <a href="{{ route('userprofile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
+                            <a href="{{ route('userprofile.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
                                 Your Profile
                             </a>
                             <a href="{{ route('dogprofiles.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
                                 My Dogs
                             </a>
-                            <a href="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
-                                Settings
+                            <a href="{{ route('userprofile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
+                                Account Settings
                             </a>
                             <hr class="my-1 border-gray-200">
                             <form method="POST" action="{{ route('logout') }}">
@@ -137,18 +145,24 @@
             <!-- Mobile User Section -->
             <div class="pt-4 pb-3 border-t border-gray-200">
                 <div class="flex items-center px-4">
-                    <div class="flex-shrink-0">
-                        <img class="h-10 w-10 rounded-full" src="/images/dogprofile.jpg" alt="Profile">
-                    </div>
+                            @if(Auth::user()->profile_picture)
+                                <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" 
+                                    alt="{{ Auth::user()->name }}" 
+                                    class="h-8 w-8 rounded-full object-cover border-2 border-orange-300">
+                            @else
+                                <div class="h-8 w-8 rounded-full bg-orange-200 flex items-center justify-center border-2 border-orange-300">
+                                    <span class="text-sm font-bold text-orange-600">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+                                </div>
+                            @endif
                     <div class="ml-3">
                         <div class="text-base font-medium text-gray-800">{{ Auth::user()->name }}</div>
                         <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
                     </div>
                 </div>
                 <div class="mt-3 space-y-1">
-                    <a href="/profile" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Your Profile</a>
+                    <a href="{{ url('/userprofile') }}" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Your Profile</a>
                     <a href="{{ route('dogprofiles.index') }}" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">My Dogs</a>
-                    <a href="/settings" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Settings</a>
+                    <a href="{{ route('userprofile.edit') }}" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Settings</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">

@@ -64,10 +64,17 @@
                 <tr class="bg-orange-500 text-white">
                     <th class="py-3 px-4 text-left">ID</th>
                     <th class="py-3 px-4 text-left">Owner</th>
+                    <th class="py-3 px-4 text-left">Name</th>
                     <th class="py-3 px-4 text-left">Breed</th>
                     <th class="py-3 px-4 text-left">Age</th>
                     <th class="py-3 px-4 text-left">Size</th>
                     <th class="py-3 px-4 text-left">Traits</th>
+                    <th class="py-3 px-4 text-left">Gender</th>
+                    <th class="py-3 px-4 text-left">Vaccination Status</th>
+                    <th class="py-3 px-4 text-left">Spayed/Neutered</th>
+                    <th class="py-3 px-4 text-left">Health</th>
+                    <th class="py-3 px-4 text-left">Owner Contact</th>
+                    <th class="py-3 px-4 text-left">Date of Birth</th>
                     <th class="py-3 px-4 text-left">Created At</th>
                     <th class="py-3 px-4 text-left">Actions</th>
                 </tr>
@@ -77,10 +84,17 @@
                 <tr class="border-b hover:bg-orange-50">
                     <td class="py-2 px-4">{{ $profile->id }}</td>
                     <td class="py-2 px-4">{{ $profile->user->name ?? 'N/A' }}</td>
+                    <td class="py-2 px-4">{{ $profile->name }}</td>
                     <td class="py-2 px-4">{{ $profile->breed }}</td>
                     <td class="py-2 px-4">{{ $profile->age ?? '-' }}</td>
                     <td class="py-2 px-4">{{ $profile->size ?? '-' }}</td>
                     <td class="py-2 px-4">{{ $profile->traits ?? '-' }}</td>
+                    <td class="py-2 px-4">{{ $profile->gender ? 'Male' : 'Female'?? '-' }}</td>
+                    <td class="py-2 px-4">{{ $profile->vaccination_status ? 'Up to date' : 'Not up to date' }}</td>
+                    <td class="py-2 px-4">{{ $profile->health_status ?? '-' }}</td>
+                    <td class="py-2 px-4">{{ $profile->spayed_neutered ?? '-' }}</td>
+                    <td class="py-2 px-4">{{ $profile->owner_contact ?? '-' }}</td>        
+                    <td class="py-2 px-4">{{ $profile->date_of_birth ?? '-' }}</td> 
                     <td class="py-2 px-4">{{ $profile->created_at->format('Y-m-d') }}</td>
                     <td class="py-2 px-4 space-x-2">
                         <a href="{{ route('admin.dogprofiles.edit', $profile->id) }}" class="text-blue-600 hover:underline">Edit</a>

@@ -13,7 +13,6 @@ return new class extends Migration
             $table->decimal('marketplace_price', 10, 2)->nullable();
             $table->enum('marketplace_category', ['puppies', 'adult_dogs', 'breeding', 'adoption'])->nullable();
             $table->text('marketplace_description')->nullable();
-            $table->string('contact_number')->nullable();
         });
     }
 
@@ -25,7 +24,6 @@ return new class extends Migration
                 'marketplace_price',
                 'marketplace_category',
                 'marketplace_description',
-                'contact_number'
             ]);
         });
     }

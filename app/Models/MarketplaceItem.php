@@ -16,7 +16,6 @@ class MarketplaceItem extends Model
         'price',
         'category',
         'images',
-        'contact_number',
         'user_id',
         'region_id',
         'is_active',

@@ -9,7 +9,21 @@
     font-family: 'Poppins', sans-serif;
 }
 
-@tailwind utilities;
+@layer utilities {
+    .pawgress-animation {
+        animation: pawgress-keyframes 2s ease-in-out
+    }
+}
+
+@keyframes pawgress-keyframes {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateY(0%);
+    }
+}
 
 .btn.btn.btn-success {
     cursor: pointer;

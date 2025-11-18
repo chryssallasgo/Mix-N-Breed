@@ -18,7 +18,6 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->enum('category', ['puppies', 'adult_dogs', 'accessories', 'services', 'food']);
             $table->json('images')->nullable();
-            $table->string('contact_number')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('region_id')->constrained()->onDelete('cascade');
             $table->boolean('is_active')->default(true);

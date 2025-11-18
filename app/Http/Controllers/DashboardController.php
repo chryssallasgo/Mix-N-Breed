@@ -6,19 +6,22 @@ use App\Models\DogProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class DashboardController extends Controller
 {
     public function index()
     {
-        $dogCount = DogProfile::count();
-        $matchCount = 5;
+        $totalDogProfiles = DogProfile::count();
+
+        $matchCount = 0;
         $tipCount = 3;
-        return view('dashboard', compact('dogCount', 'matchCount', 'tipCount'));
+
+        return view('dashboard', compact('totalDogProfiles', 'matchCount', 'tipCount'));
     }
     public function tryItOut()
     {
-        if (Auth::check()) {
-            flash()->warning('Please login or register to try DogMatch!');
+        if (!Auth::check()) {
+            session()->flash('warning', 'Please login or register to try DogMatch!');
             return redirect()->route('login');
         }
 
@@ -26,8 +29,8 @@ class DashboardController extends Controller
     }
     public function addDogProfile()
     {
-        if (Auth::check()) {
-            flash()->warning('Please login or register to add a dog profile.');
+        if (!Auth::check()) {
+            session()->flash('warning', 'Please login or register to add a dog profile.');
             return redirect()->route('login');
         }
 

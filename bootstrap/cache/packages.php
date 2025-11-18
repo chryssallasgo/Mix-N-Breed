@@ -70,4 +70,26 @@
       0 => 'Flasher\\Laravel\\FlasherServiceProvider',
     ),
   ),
+  'php-flasher/flasher-noty-laravel' => 
+  array (
+    'aliases' => 
+    array (
+      'Noty' => 'Flasher\\Noty\\Laravel\\Facade\\Noty',
+    ),
+    'providers' => 
+    array (
+      0 => 'Flasher\\Noty\\Laravel\\FlasherNotyServiceProvider',
+    ),
+  ),
+  'php-flasher/flasher-toastr-laravel' => 
+  array (
+    'aliases' => 
+    array (
+      'Toastr' => 'Flasher\\Toastr\\Laravel\\Facade\\Toastr',
+    ),
+    'providers' => 
+    array (
+      0 => 'Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider',
+    ),
+  ),
 );

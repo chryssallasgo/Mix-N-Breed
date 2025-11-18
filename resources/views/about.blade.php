@@ -4,15 +4,12 @@
 
 @section('content')
 <div class="max-w-full mx-auto px-4 py-12">
-    <div class="sm:flex items-center">
-        <div class="sm:w-1/2 p-10">
-            <div class="image object-center text-center">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="image object-center">
                 <img src="/images/team.svg" height="500" width="600" alt="Our Team Illustration" class="mx-auto rounded-lg">
             </div>
-        </div>
-        <div class="sm:w-1/2 p-5">
-            <div class="text">
-                <span class="text-gray-500 border-b-2 border-orange-400 uppercase">About us</span>
+            <div class="text-center"> 
+                <span class=" text-gray-500 border-b-2 border-orange-400 uppercase">About us</span>
                 <h2 class="my-4 font-bold text-3xl  sm:text-4xl ">About <span class="text-orange-400">Our Company</span>
                 </h2>
                 <p class="text-gray-700">
@@ -23,7 +20,6 @@
                 </p>
             </div>
         </div>
-    </div>
     <div class="sm:flex items-center bg-white mt-10 p-6 rounded-lg shadow-md">
         <div class="sm:w-1/2 p-5">
             <div>
@@ -127,7 +123,7 @@
             <img src="/images/Human.svg" alt="" class="size-16 rounded-full outline-1 -outline-offset-1 outline-black/5" />
             <div>
                 <h3 class="text-base/7 font-semibold tracking-tight text-gray-900">Lumapas, Nina Regene</h3>
-                <p class="text-sm/6 font-semibold text-indigo-600">Project Manager Assistant</p>
+                <p class="text-sm/6 font-semibold text-indigo-600">Hustler</p>
             </div>
             </div>
         </li>

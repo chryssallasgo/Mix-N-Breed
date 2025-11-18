@@ -3,9 +3,9 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use App\Models\DogProfile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class DogMatchForm extends Component
 {
@@ -17,20 +17,21 @@ class DogMatchForm extends Component
     public $resultTraits;
     public $profiles;
     public $hasProfiles;
+    public $selectedCount;
 
     public function mount()
+
     {
-        $this->profiles = Auth::user()->dogProfiles;
-        $this->hasProfiles = Auth::user()->dogProfiles()->exists();
+        $this->profiles = DogProfile::where('user_id', Auth::id())->get();
+        $this->hasProfiles = $this->profiles->count() >= 2;
+        $this->selectedCount = count($this->selectedProfiles);
     }
 
     public function toggleProfileSelection($profileId)
     {
         if (in_array($profileId, $this->selectedProfiles)) {
-            // Deselect if already selected
             $this->selectedProfiles = array_values(array_diff($this->selectedProfiles, [$profileId]));
         } else {
-            // Only allow selection if less than 2 dogs are selected
             if (count($this->selectedProfiles) < 2) {
                 $this->selectedProfiles[] = $profileId;
             }

@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-orange-50 bg-[url('/images/paws-bg.png')] bg-cover py-8">
+<div class="min-h-screen bg-orange-50 bg-[url('/images/doggielogo.png')] bg-cover py-8">
     <div class="max-w-3xl mx-auto px-4">
         <div class="bg-white rounded-2xl shadow-lg p-8 border-2 border-orange-200">
             <div class="text-center mb-8">
@@ -8,11 +8,15 @@
             
             <div class="space-y-6">
                 <div class="flex items-center space-x-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
-                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                    </div>
+                        @if(Auth::user()->profile_picture)
+                            <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" 
+                                alt="{{ Auth::user()->name }}" 
+                                class="h-15 w-15 rounded-full object-cover border-2 border-orange-300">
+                        @else
+                            <div class="h-8 w-8 rounded-full bg-orange-200 flex items-center justify-center border-2 border-orange-300">
+                                <span class="text-sm font-bold text-orange-600">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+                            </div>
+                        @endif
                     <div>
                         <h3 class="text-lg font-semibold text-gray-900">{{ $user->name }}</h3>
                         <p class="text-gray-600">{{ $user->email }}</p>
@@ -46,7 +50,7 @@
                 <div class="flex justify-center space-x-4 pt-6">
                     <a href="{{ route('userprofile.edit') }}" 
                        class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
-                        Edit Profile
+                        Edit in Account Settings
                     </a>
                     <a href="{{ route('dogprofiles.index') }}" 
                        class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">

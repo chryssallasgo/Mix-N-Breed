@@ -6,16 +6,18 @@ use App\Models\DogProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function Flasher\Noty\Prime\noty;
+
 class DogProfileController extends Controller
 {
     public function edit($id)
     {
-        $profile = Auth::user()->dogProfiles()->findOrFail($id);
+        $profile = DogProfile::where('user_id', Auth::id())->findOrFail($id);
         return view('dogprofiles.edit', compact('profile'));
     }
     public function update(Request $request, $id)
     {
-        $profile = Auth::user()->dogProfiles()->findOrFail($id);
+        $profile = DogProfile::where('user_id', Auth::id())->findOrFail($id);
         $validated = $request->validate([
             'image' => 'nullable|image|max:2048',
             'name' => 'nullable|string|max:255',
@@ -39,7 +41,8 @@ class DogProfileController extends Controller
 
         $profile->update($validated);
 
-        return redirect()->route('dogprofiles.index')->with('success', 'Profile updated!');
+        noty()->success('Profile updated!');
+        return redirect()->route('dogprofiles.index');
     }
     public function create()
     {
@@ -64,26 +67,27 @@ class DogProfileController extends Controller
             'date_of_birth' => 'nullable|date',
         ]);
 
+        $validated['user_id'] = Auth::id();
+
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('dog_images', 'public');
         }
 
-        $validated['user_id'] = Auth::id();
-
         DogProfile::create($validated);
-
-        return redirect()->route('dogprofiles.index')->with('success', 'Profile saved!');
+        noty()->success('Profile saved!');
+        return redirect()->route('dogprofiles.index');
     }
     public function destroy($id)
     {
-        $profile = Auth::user()->dogProfiles()->findOrFail($id);
+        $profile = DogProfile::where('user_id', Auth::id())->findOrFail($id);
         $profile->delete();
 
-        return redirect()->route('dogprofiles.index')->with('success', 'Profile deleted!');
+        noty()->warning('Profile deleted!');
+        return redirect()->route('dogprofiles.index');
     }
     public function index()
     {
-        $profiles = Auth::user()->dogProfiles;
+        $profiles = DogProfile::where('user_id', Auth::id())->get();
         return view('dogprofiles.index', compact('profiles'));
     }
 }

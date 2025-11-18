@@ -92,7 +92,6 @@
             <div class="mb-4">
                 <label class="block text-orange-700 font-semibold mb-1">Vaccination Status</label>
                 <select name="vaccination_status" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300 @error('vaccination_status') border-red-400 @enderror">
-                    <option value="">Select status</option>
                     <option value="Up to date" {{ old('vaccination_status', $profile->vaccination_status)=='Up to date'?'selected':'' }}>Up to date</option>
                     <option value="Not up to date" {{ old('vaccination_status', $profile->vaccination_status)=='Not up to date'?'selected':'' }}>Not up to date</option>
                     <option value="Unknown" {{ old('vaccination_status', $profile->vaccination_status)=='Unknown'?'selected':'' }}>Unknown</option>
@@ -141,7 +140,9 @@
 
             <div class="mb-4">
                 <label class="block text-orange-700 font-semibold mb-1">Date of Birth</label>
-                <input type="date" name="date_of_birth" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300 @error('date_of_birth') border-red-400 @enderror" value="{{ old('date_of_birth', $profile->date_of_birth) }}">
+                <input type="date" name="date_of_birth"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300 @error('date_of_birth') border-red-400 @enderror"
+                value="{{ old('date_of_birth', optional($profile->date_of_birth)->format('M d, Y')) }}">
                 @error('date_of_birth')
                     <span class="text-red-500 text-xs">{{ $message }}</span>
                 @enderror

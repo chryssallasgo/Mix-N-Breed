@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <section class="pl-5 pr-5 relative bg-gradient-to-r from-amber-500  to-orange-600 py-10 overflow-hidden"> <!-- or image bg-[url('/public/images/gr.jpg')] -->
+    <section class="pl-5 pr-5 relative bg-linear-to-r from-amber-500  to-orange-600 py-10 overflow-hidden"> <!-- or image bg-[url('/public/images/gr.jpg')] -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
             <div class="space-y-6">
                 <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight">
@@ -29,7 +29,7 @@
             <div class="relative">
                 <img src="{{ asset('images/dogprofile.jpg') }}" alt="Featured Dog" 
                      class="rounded-2xl shadow-2xl w-full h-[500px] object-cover">
-                <div class="absolute inset-0 rounded-2xl bg-gradient-to-tr from-orange-500/20 to-transparent"></div>
+                <div class="absolute inset-0 rounded-2xl bg-linear-to-tr from-orange-500/20 to-transparent"></div>
             </div>
         </div>
     </section>
@@ -45,7 +45,7 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-gray-800">{{ $dogCount ?? '--' }}</div>
+                        <div class="text-3xl font-bold text-gray-800">{{ $totalDogProfiles ?? 0 }}</div>
                         <div class="text-gray-600">Dogs Registered</div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-gray-800">{{ $matchCount ?? '--' }}</div>
+                        <div class="text-3xl font-bold text-gray-800">{{ $matchCount ?? 0 }}</div>
                         <div class="text-gray-600">Matches Made</div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-gray-800">{{ $tipCount ?? '--' }}</div>
+                        <div class="text-3xl font-bold text-gray-800">{{ $tipCount ?? 0 }}</div>
                         <div class="text-gray-600">Health Tips</div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                 <div class="bg-white rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="relative h-48">
                         <img src="{{ asset('images/goldendoodle.jpg') }}" alt="Goldendoodle" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black to-transparent p-4">
                             <h3 class="text-white font-bold text-xl">Goldendoodle</h3>
                             <p class="text-white text-opacity-80">Golden Retriever + Poodle</p>
                         </div>
@@ -135,7 +135,7 @@
                 <div class="bg-white rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="relative h-48">
                         <img src="{{ asset('images/pomsky.jpg') }}" alt="Pomsky" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black to-transparent p-4">
                             <h3 class="text-white font-bold text-xl">Pomsky</h3>
                             <p class="text-white text-opacity-80">Pomeranian + Husky</p>
                         </div>
@@ -154,7 +154,7 @@
                 <div class="bg-white rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="relative h-48">
                         <img src="{{ asset('images/chug.jpg') }}" alt="Chug" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black to-transparent p-4">
                             <h3 class="text-white font-bold text-xl">Chug</h3>
                             <p class="text-white text-opacity-80">Chihuahua + Pug</p>
                         </div>

@@ -11,15 +11,16 @@ use App\Http\Controllers\Admin\DogProfileController as AdminDogProfileController
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\UserProfileController;
 
-Route::get('/', function () {
-    return view('dashboard');
-});
+Route::get('/', [DashboardController::class, 'index'])->name('home');
+
 Route::middleware(['auth'])->group(function () {
     Route::resource('dogprofiles', DogProfileController::class);
     Route::get('/dogmatch', [DogMatchController::class, 'form'])->name('dogmatch.form');
 });
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     //Dog Profile CRUD Routes
     Route::get('/dogprofiles', [DogProfileController::class, 'index'])->name('dogprofiles.index');
     Route::get('/dogprofiles/create', [DogProfileController::class, 'create'])->name('dogprofiles.create');
@@ -28,14 +29,19 @@ Route::middleware('auth')->group(function () {
     Route::put('/dogprofiles/{id}', [DogProfileController::class, 'update'])->name('dogprofiles.update');
     Route::delete('/dogprofiles/{id}', [DogProfileController::class, 'destroy'])->name('dogprofiles.destroy');
     // User Profile CRUD Routes
-    Route::get('/userprofile', [UserProfileController::class, 'show'])->name('userprofile.show');
+    Route::get('/userprofile', [UserProfileController::class, 'index'])->name('userprofile.index');
     Route::get('/userprofile/edit', [UserProfileController::class, 'edit'])->name('userprofile.edit');
-    Route::put('/userprofile', [UserProfileController::class, 'update'])->name('userprofile.update');
+    Route::patch('/userprofile', [UserProfileController::class, 'update'])->name('userprofile.update');
+    Route::post('/userprofile/picture', [UserProfileController::class, 'updateProfilePicture'])->name('userprofile.picture');
+    Route::put('/password', [UserProfileController::class, 'updatePassword'])->name('password.update');
+    Route::delete('/userprofile', [UserProfileController::class, 'destroy'])->name('userprofile.destroy');
 });
 
 //Dog Match Routes
 Route::middleware('auth')->group(function () {
-    Route::get('/dogmatch', [DogMatchController::class, 'form'])->name('dogmatch.form');
+    Route::get('/dogmatch', function () {
+        return view('dogmatch.form');
+    })->name('dogmatch.form');
     Route::post('/dogmatch/process', [DogMatchController::class, 'process'])->name('dogmatch.process');
 });
 //Authentication Routes
@@ -52,7 +58,7 @@ Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contactus')->name('contactus');
 //admin routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/admindashboard', [AdminUserController::class, 'dashboard'])->name('admindashboard');
+    Route::get('/admindashboard', [AdminUserController::class, 'admindashboard'])->name('admindashboard');
 
     Route::resource('users', AdminUserController::class)->except(['create', 'store', 'show']);
     Route::resource('dogprofiles', AdminDogProfileController::class)->except(['create', 'store', 'show']);

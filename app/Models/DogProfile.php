@@ -2,37 +2,44 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DogProfile extends Model
 {
-    public $dogProfiles;
+
+    use HasFactory;
 
     protected $fillable = [
         'image',
+        'user_id',
         'name',
         'breed',
         'age',
         'size',
         'traits',
-        'user_id',
         'gender',
         'weight',
+        'date_of_birth',
         'vaccination_status',
         'health_status',
         'spayed_neutered',
         'owner_contact',
-        'date_of_birth',
         'is_marketplace_visible',
         'marketplace_price',
         'marketplace_category',
         'marketplace_description',
-        'contact_number',
     ];
     protected $casts = [
+        'spayed_neutered' => 'boolean',
+        'date_of_birth' => 'date',
         'is_marketplace_visible' => 'boolean',
         'marketplace_price' => 'decimal:2',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function scopeMarketplaceVisible($query)
     {
         return $query->where('is_marketplace_visible', true);
@@ -46,9 +53,5 @@ class DogProfile extends Model
             'adoption' => 'Adoption'
         ];
         return $categories[$this->marketplace_category] ?? null;
-    }
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 }

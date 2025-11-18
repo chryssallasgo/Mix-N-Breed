@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\DogProfile;
-use Symfony\Component\Process\Process;
-use Flasher\Prime\Flasher;
+
 use Illuminate\Support\Facades\Storage;
 
 class DogMatchController extends Controller

@@ -73,8 +73,7 @@ class DogProfileComponent extends Component
     public function render()
     {
         // search function
-        $profiles = Auth::user()
-            ->dogProfiles()
+        $profiles = DogProfileModel::where('user_id', Auth::id())
             ->when($this->search, function ($query) {
                 $query->where(function ($subQuery) {
                     $subQuery->where('name', 'like', '%' . $this->search . '%')

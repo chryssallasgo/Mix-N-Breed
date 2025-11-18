@@ -1,20 +1,8 @@
-<div class="min-h-screen flex flex-col items-center bg-orange-50 bg-[url('/images/paws-bg.png')] bg-cover py-8">
-    @if (session()->has('message'))
-        <div class="fixed top-20 left-1/2 transform -translate-x-1/2 z-60 mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg max-w-md shadow-lg">
-            <div class="flex items-center justify-between">
-                <span>{{ session('message') }}</span>
-                <button onclick="this.parentElement.parentElement.style.display='none'" class="ml-4 text-green-600 hover:text-green-800">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    @endif
+<div class="min-h-screen flex flex-col items-center bg-orange-50 bg-[url('/images/doggielogo.png')] bg-cover py-8">
 
     {{-- Marketplace Form Modal --}}
     @if($showMarketplaceForm)
-        <div class="fixed inset-0 bg-white bg-opacity-10 flex items-center justify-center z-50">
+        <div class="fixed inset-0 bg-orange-100/50 bg-opacity-10 flex items-center justify-center z-50">
             <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4 max-h-screen overflow-y-auto">
                 <h3 class="text-xl font-bold text-gray-900 mb-4">Add to Marketplace</h3>
                 
@@ -77,18 +65,30 @@
         </div>
     @endif
 
-    {{-- Original Search Section --}}
-    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-4 border-2 border-orange-200 mb-5">
-        <div class="flex items-center justify-center">
-            <div class="rounded-lg p-2">
-                <input type="text" 
-                       wire:model.live.debounce.300ms="search" 
-                       name="search" 
-                       class="w-full bg-gray-200 pl-2 text-base outline-0 rounded-md py-2 px-50" 
-                       placeholder="Search here...">
+    {{-- Search Bar --}}
+        <div class="w-screen max-w-2xl bg-white rounded-2xl shadow-lg p-4 border-2 border-orange-200 mb-5">
+            <div class="flex items-center justify-center">
+                <div class="flex flex-col w-full max-w-md space-y-2 md:flex-row md:space-y-0 md:space-x-2">
+                    <div class="relative w-full grow">     
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </div>
+
+                        <input type="text" 
+                            wire:model.live.debounce.300ms="search" 
+                            name="search" 
+                            class="w-full bg-gray-100 text-base outline-none rounded-md py-2 pl-10 pr-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500" 
+                            placeholder="Search here...">
+                    </div>      
+                    <a href="/dogprofiles/create" 
+                    class="flex justify-center w-full md:w-auto shrink-0 bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 whitespace-nowrap">
+                        Add dog profile
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
 
     {{-- Profile Cards Grid --}}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-6xl">
@@ -127,15 +127,18 @@
                 {{-- Profile Details Grid --}}
                 <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
                     <div><strong>Age:</strong> {{ $profile->age }} {{ $profile->age == 1 ? 'year' : 'years' }}</div>
-                    <div><strong>Size:</strong> {{ ucfirst($profile->size) }}</div>
+                    <div><strong>Size:</strong> {{ ($profile->size) }}</div>
                     <div><strong>Weight:</strong> {{ $profile->weight }} kg</div>
-                    <div><strong>Gender:</strong> {{ ucfirst($profile->gender) }}</div>
+                    <div><strong>Gender:</strong> {{ ($profile->gender ? 'Male' : 'Female') }}</div>
                 </div>
 
                 {{-- Health Information --}}
                 <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
-                    <div><strong>Vaccinated:</strong> {{ $profile->vaccination_status ? 'Yes' : 'No' }}</div>
-                    <div><strong>Health:</strong> {{ ucfirst($profile->health_status) }}</div>
+                    <div><strong>Vaccinated:</strong>
+                        @php $v = strtolower(trim((string)$profile->vaccination_status)); @endphp
+                        {{ $v === 'up to date' ? 'Up to date' : ($v === 'not up to date' ? 'Not up to date' : 'Unknown') }}
+                    </div>
+                    <div><strong>Health:</strong> {{ ($profile->health_status) }}</div>
                     <div><strong>Spayed/Neutered:</strong> {{ $profile->spayed_neutered ? 'Yes' : 'No' }}</div>
                     <div><strong>Birthday:</strong> {{ \Carbon\Carbon::parse($profile->date_of_birth)->format('M d, Y') }}</div>
                 </div>
@@ -146,14 +149,11 @@
                     <p class="text-gray-700 text-sm mt-1">{{ $profile->traits }}</p>
                 </div>
 
-                {{-- Contact Information --}}
                 <div class="mb-4 text-sm">
                     <strong>Owner Contact:</strong> {{ $profile->owner_contact }}
                 </div>
 
-                {{-- Action Buttons --}}
                 <div class="flex flex-col space-y-2">
-                    {{-- First row: Edit and Delete --}}
                     <div class="flex space-x-2">
                         <a href="{{ route('dogprofiles.edit', $profile->id) }}" 
                            class="bg-orange-500 hover:bg-orange-400 text-white px-2 py-2 rounded-lg text-sm font-medium transition-colors flex-1 text-center">
@@ -173,7 +173,6 @@
                         </form>
                     </div>
 
-                    {{-- Second row: Marketplace Toggle --}}
                     <button wire:click="toggleMarketplace({{ $profile->id }})"
                             class="w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors
                                    {{ $profile->is_marketplace_visible 
@@ -185,7 +184,6 @@
             </div>
         @endforeach
 
-        {{-- Empty State --}}
         @if($profiles->isEmpty())
             <div class="col-span-full text-center py-12">
                 <div class="text-gray-400 mb-4">
