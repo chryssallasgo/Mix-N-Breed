@@ -11,8 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
 </head>
 
-<body class="bg-orange-50 font-sans">
-<nav class="bg-white shadow-lg sticky top-0 z-10">
+<body class="dark:bg-gray-950 bg-orange-50 font-sans">
+<nav class="bg-white dark:bg-gray-900 shadow-lg sticky top-0 z-10">
     <div class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <!-- Logo and brand -->
@@ -28,17 +28,17 @@
 
             <!-- Desktop Navigation Links -->
             <div class="hidden md:flex md:grow justify-end md:items-center md:space-x-8">
-                <a href="/" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Home</a>
-                <a href="/about" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">About</a>
-                <a href="/docs" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Docs</a>
-                <a href="{{ auth()->check() ? route('dogmatch.form') : route('login') }}" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Get Started</a>
-                <a href="{{ route('marketplace.index') }}" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Marketplace</a>
+                <a href="/" class="text-gray-700 dark:text-white hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Home</a>
+                <a href="/about" class="text-gray-700 dark:text-white hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">About</a>
+                <a href="/docs" class="text-gray-700 dark:text-white hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Docs</a>
+                <a href="{{ auth()->check() ? route('dogmatch.form') : route('login') }}" class="text-gray-700 dark:text-white hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Get Started</a>
+                <a href="{{ route('marketplace.index') }}" class="text-gray-700 dark:text-white hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Marketplace</a>
             </div>
 
             <!-- Desktop Auth Buttons -->
             <div class="hidden md:flex md:items-center md:space-x-4">
                 @guest
-                    <a href="/login" class="text-gray-700 hover:text-orange-500 px-4 py-2 rounded-md text-sm font-medium border border-gray-300 hover:border-orange-500 transition-all duration-200">
+                    <a href="/login" class="text-gray-700 dark:text-white hover:text-orange-500 px-4 py-2 rounded-md text-sm font-medium border border-gray-300 hover:border-orange-500 transition-all duration-200">
                         Login
                     </a>
                     <a href="/register" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm">
@@ -50,7 +50,7 @@
                     <div class="relative">
                         <button 
                             id="desktop-user-menu-button"
-                            class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 focus:outline-none focus:text-orange-500 transition-colors duration-200 px-2 py-1 rounded-md hover:bg-orange-50"
+                            class="flex items-center space-x-2 text-gray-700 dark:text-white hover:text-orange-500 focus:outline-none focus:text-orange-500 transition-colors duration-200 px-2 py-1 rounded-md hover:bg-orange-50 dark:hover:bg-gray-950"
                             aria-expanded="false"
                             aria-haspopup="true">
                             @if(Auth::user()->profile_picture)
@@ -71,21 +71,21 @@
                         <!-- dropdown_menu -->
                         <div 
                             id="desktop-user-dropdown"
-                            class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 border border-gray-200 opacity-0 invisible transform scale-95 transition-all duration-200 ease-out z-50"
+                            class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-900 rounded-md shadow-lg py-1 border border-gray-200 opacity-0 invisible transform scale-95 transition-all duration-200 ease-out z-50"
                             role="menu">
-                            <a href="{{ route('userprofile.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
+                            <a href="{{ route('userprofile.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-white dark:hover:bg-gray-950 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
                                 Your Profile
                             </a>
-                            <a href="{{ route('dogprofiles.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
+                            <a href="{{ route('dogprofiles.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-white dark:hover:bg-gray-950 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
                                 My Dogs
                             </a>
-                            <a href="{{ route('userprofile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
+                            <a href="{{ route('userprofile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-white dark:hover:bg-gray-950 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
                                 Account Settings
                             </a>
                             <hr class="my-1 border-gray-200">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
+                                <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-400 dark:hover:bg-gray-950 hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200" role="menuitem">
                                     Sign out
                                 </button>
                             </form>
@@ -119,12 +119,12 @@
 
     <!-- Mobile menu (hidden by default) -->
     <div class="md:hidden hidden" id="mobile-menu">
-        <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+        <div class="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-900 border-t dark:border-gray-450 border-gray-200">
             <!-- Mobile Navigation Links -->
-            <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Home</a>
-            <a href="/about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">About</a>
-            <a href="/docs" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Docs</a>
-            <a href="{{ auth()->check() ? route('dogmatch.form') : route('login') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-orange-50 transition-all duration-200">Get Started</a>
+            <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 dark:text-white hover:bg-orange-50 transition-all duration-200">Home</a>
+            <a href="/about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 dark:text-white hover:bg-orange-50 transition-all duration-200">About</a>
+            <a href="/docs" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 dark:text-white hover:bg-orange-50 transition-all duration-200">Docs</a>
+            <a href="{{ auth()->check() ? route('dogmatch.form') : route('login') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-500 dark:text-white hover:bg-orange-50 transition-all duration-200">Get Started</a>
         </div>
 
         @guest
@@ -155,8 +155,8 @@
                                 </div>
                             @endif
                     <div class="ml-3">
-                        <div class="text-base font-medium text-gray-800">{{ Auth::user()->name }}</div>
-                        <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
+                        <div class="text-base font-medium dark:text-white text-gray-800">{{ Auth::user()->name }}</div>
+                        <div class="text-sm font-medium dark:text-gray-300 text-gray-500">{{ Auth::user()->email }}</div>
                     </div>
                 </div>
                 <div class="mt-3 space-y-1">
@@ -320,19 +320,19 @@ document.addEventListener('DOMContentLoaded', function() {
     <main>
         @yield('content')
             <!-- Footer content contains information such as, contains logo, quick links, resources, and contact info -->
-    <footer class="bg-orange-100 border-t-2 border-orange-100">
+    <footer class="dark:bg-gray-900 bg-orange-100 border-t-2 dark:border-gray-900 border-orange-100">
             <div class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="flex flex-col items-center md:items-start">
                     <img src="{{ asset('images/doggielogo.png') }}" alt="Mix N' Breed Logo" class="w-14 h-14 mb-2">
                     <span class="font-bold text-orange-700 text-xl mb-2">Mix N' Breed</span>
-                    <p class="text-gray-700 text-sm mb-2 text-center md:text-left">
+                    <p class="text-gray-700 dark:text-gray-400 text-sm mb-2 text-center md:text-left">
                         Helping you discover the magic of mixed breeds.<br>
                         Your guide to responsible and fun dog breeding! 🐾
                     </p>
                 </div>
                 <div>
                     <h3 class="font-semibold text-orange-700 mb-3">Quick Links</h3>
-                    <ul class="space-y-2 text-gray-700 text-sm">
+                    <ul class="space-y-2 text-gray-700 dark:text-gray-400 text-sm">
                         <li><a href="{{ url('/') }}" class="hover:text-orange-600">Home</a></li>
                         <li><a href="{{ route('dogprofiles.index') }}" class="hover:text-orange-600">Your Dogs</a></li>
                         <li><a href="{{ route('dogmatch.form') }}" class="hover:text-orange-600">Mix Breeds</a></li>
@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div>
                     <h3 class="font-semibold text-orange-700 mb-3">Resources</h3>
-                    <ul class="space-y-2 text-gray-700 text-sm">
+                    <ul class="space-y-2 text-gray-700 dark:text-gray-400 text-sm">
                         <li><a href="#" class="hover:text-orange-600">Dog Breeding Guide</a></li>
                         <li><a href="#" class="hover:text-orange-600">Breeder Tips</a></li>
                         <li><a href="{{ url('/docs') }}" class="hover:text-orange-600">FAQs</a></li>
@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div>
                     <h3 class="font-semibold text-orange-700 mb-3">Connect</h3>
-                    <ul class="space-y-2 text-gray-700 text-sm">
+                    <ul class="space-y-2 text-gray-700 dark:text-gray-400 text-sm">
                         <li>
                             <a href="mailto:info@mixnbreed.com" class="hover:text-orange-600 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 12H8m8 0a4 4 0 11-8 0 4 4 0 018 0zm2 4v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2"></path></svg>
@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </ul>
                 </div>
             </div>
-            <div class="bg-orange-400 text-center text-gray-100 text-xs py-4 border-t border-orange-300">
+            <div class="dark:bg-gray-700 bg-orange-400 text-center text-gray-100 text-xs py-4 border-t border-orange-300 dark:border-gray-700">
                 &copy; {{ date('Y') }} Mix N' Breed. All rights reserved.
             </div>
         </footer>
