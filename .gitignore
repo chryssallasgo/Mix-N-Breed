@@ -21,3 +21,13 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+# Python API
+python-api/__pycache__/
+python-api/temp_uploads/*
+!python-api/temp_uploads/.gitkeep
+python-api/venv/
+python-api/*.log
+
+# Optional: Ignore large model files (see note below)
+# python-api/models/*.keras
+# python-api/models/*.h5

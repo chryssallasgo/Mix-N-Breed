@@ -12,11 +12,39 @@
                 <img src="{{ $resultImage ?? asset('images/doggielogoprev.png') }}" 
                      class="w-40 h-40 rounded-full object-cover border-2 border-orange-300 shadow-inner mb-4">
                 <div class="text-sm text-gray-700 space-y-1">
-                    <p><strong>Breed:</strong> {{ $resultBreed ?? '—' }}</p>
+                    <p><strong>Breed:</strong> {{--  {{ $resultBreed ?? '—' }} --}}</p>
                     <p><strong>Lifespan:</strong> {{ $resultLifespan ?? '—' }}</p>
                     <p><strong>Size:</strong> {{ $resultSize ?? '—' }}</p>
                     <p><strong>Traits:</strong> {{ $resultTraits ?? '—' }}</p>
+                    <p><strong>Compatibility Score:</strong> {{ $resultCompatibility ?? '—' }}</p>
                 </div>
+                                            {{-- Identified Breeds Section --}}
+                            @if($identifiedBreed1 || $identifiedBreed2)
+                            <div class="pt-4 border-t border-orange-200">
+                                <h4 class="text-sm font-semibold text-gray-500 uppercase mb-3">Identified Dog Breeds:</h4>
+                                <div class="space-y-2">
+                                    @if($identifiedBreed1)
+                                    <div class="flex items-center justify-between bg-white p-3 rounded-lg">
+                                        <div>
+                                            <p class="font-semibold text-gray-800">Dog 1: {{ $identifiedBreed1 }}</p>
+                                            <p class="text-xs text-gray-500">Confidence: {{ $identifiedBreed1Confidence }}</p>
+                                        </div>
+                                        <span class="text-2xl">🐕</span>
+                                    </div>
+                                    @endif
+
+                                    @if($identifiedBreed2)
+                                    <div class="flex items-center justify-between bg-white p-3 rounded-lg">
+                                        <div>
+                                            <p class="font-semibold text-gray-800">Dog 2: {{ $identifiedBreed2 }}</p>
+                                            <p class="text-xs text-gray-500">Confidence: {{ $identifiedBreed2Confidence }}</p>
+                                        </div>
+                                        <span class="text-2xl">🐕</span>
+                                    </div>
+                                    @endif
+                                </div>
+                            </div>
+                            @endif
             </div>
         </div>
         {{-- Dog Selection --}}
@@ -93,22 +121,60 @@
                 </div>
 
                 {{-- loadingscreen or spinner --}}
-            <div wire:loading.flex wire:target="mixBreeds" class="absolute inset-0 bg-gray-100/50 flex items-center justify-center z-50">
-                <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center border-2 border-orange-300">
-                    <img src="{{ asset('images/doggielogo.png') }}" alt="MixNBreed Logo" class="h-16 mx-auto mb-4">
-                    <div class="w-full h-8 bg-gray-200 rounded-full overflow-hidden relative my-6">
-                        <div class="h-full w-full bg-linear-to-r from-orange-400 via-amber-500 to-cyan-500 pawgress-animation"></div>
-                        <div class="absolute inset-0 flex items-center justify-between px-2">
-                            @for ($i = 0; $i < 10; $i++)
-                    <img src="{{ asset('images/loader.png') }}" alt="MixNBreed Logo" class="h-6 mx-auto " style="transform: rotate({{ rand(-25, 25) }}deg);">
-                            @endfor
+                @if($isProcessing)
+                    <div class="fixed inset-0 bg-gray-900/50 flex items-center justify-center z-50" wire:loading.class="block">
+                        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center border-2 border-orange-300">
+                            <img src="{{ asset('images/doggielogo.png') }}" alt="MixNBreed Logo" class="h-16 mx-auto mb-4">
+                            
+                            {{-- Progress Bar with Paw Prints --}}
+                            <div class="w-full h-8 bg-gray-200 rounded-full overflow-hidden relative my-6">
+                                <div class="h-full bg-linear-to-r from-orange-400 via-amber-500 to-cyan-500 pawgress-animation transition-all duration-500"
+                                     style="width: {{ (array_search($currentStep, array_keys($processingSteps)) + 1) / count($processingSteps) * 100 }}%">
+                                </div>
+                                <div class="absolute inset-0 flex items-center justify-between px-2">
+                                    @for ($i = 0; $i < 10; $i++)
+                                        <img src="{{ asset('images/loader.png') }}" 
+                                             alt="Paw" 
+                                             class="h-6 mx-auto" 
+                                             style="transform: rotate({{ rand(-25, 25) }}deg);">
+                                    @endfor
+                                </div>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Hold on to your Dogs!</h3>
+                            
+                            {{-- Current Status Message --}}
+                            <p class="text-orange-600 font-medium mb-4 min-h-6">
+                                {{ $processingSteps[$currentStep] ?? 'Processing...' }}
+                            </p>
+
+                            {{-- Status Steps List --}}
+                            <div class="mt-6 space-y-2 text-left">
+                                @foreach($processingSteps as $step => $message)
+                                    <div class="flex items-center space-x-3 text-sm">
+                                        @if($currentStep === $step)
+                                            {{-- Current Step - Animated Spinner --}}
+                                            <div class="shrink-0 w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                                            <span class="text-orange-600 font-medium">{{ $message }}</span>
+                                        @elseif(array_search($step, array_keys($processingSteps)) < array_search($currentStep, array_keys($processingSteps)))
+                                            {{-- Completed Step - Green Check --}}
+                                            <svg class="w-5 h-5 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span class="text-gray-500 line-through">{{ $message }}</span>
+                                        @else
+                                            {{-- Pending Step - Gray Circle --}}
+                                            <div class="w-5 h-5 rounded-full border-2 border-gray-300 shrink-0"></div>
+                                            <span class="text-gray-400">{{ $message }}</span>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <p class="text-gray-500 text-xs mt-4">This may take a minute...</p>
                         </div>
                     </div>
-
-                    <h3 class="text-xl font-bold text-gray-800">Hold on to your Dogs!</h3>
-                    <p class="text-gray-600 mt-1">Calculating cuteness... wagging tails!</p>
-                </div>
-            </div>
+                @endif
 
                 {{-- error messages --}}
                 @if (session()->has('error'))

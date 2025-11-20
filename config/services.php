@@ -34,5 +34,8 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'breed_identification' => [
+        'url' => env('BREED_IDENTIFICATION_API_URL', 'http://localhost:5001'),
+        'key' => env('BREED_IDENTIFICATION_API_KEY'),
+    ],
 ];
