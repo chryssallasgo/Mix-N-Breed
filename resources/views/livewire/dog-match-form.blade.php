@@ -1,4 +1,4 @@
-<div class="min-h-screen flex items-center justify-center bg-orange-50 bg-[url('/images/doggielogo.png')] bg-cover">
+<div class="min-h-screen flex items-center justify-center bg-orange-50 dark:bg-gray-800 bg-[url('/images/doggielogo.png')] bg-cover">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-8 rounded-2xl shadow-2xl w-full max-w-6xl border-2 border-orange-200">
         {{-- Result Display --}}
         <div class="flex flex-col">

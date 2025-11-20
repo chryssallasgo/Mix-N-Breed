@@ -100,9 +100,9 @@
                     </svg>
                 </a>
                 {{-- darkmode --}}
-                <button onclick="document.body.classList.toggle('dark')" class="text-gray-400 hover:text-orange-500 p-2 rounded-md transition-colors duration-200" title="darkness mode toggle" id="theme-toggle">
-                    <i id="theme-icon" class="fas fa-moon"></i>
-                </button>
+                    <button onclick="toggleDarkMode()" class="text-gray-400 hover:text-orange-500 p-2 rounded-md transition-colors duration-200" title="darkness mode toggle" id="theme-toggle">
+                        <i id="theme-icon" class="fas fa-moon"></i>
+                    </button>
 
             </div>
 
@@ -192,6 +192,31 @@
 
 <!-- hover/click functionality -->
 <script>
+    function toggleDarkMode() {
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    updateDarkModeIcon(isDark);
+}
+
+function updateDarkModeIcon(isDark) {
+    const icon = document.getElementById('theme-icon');
+    if (isDark) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+    }
+}
+
+// Initialize dark mode on page load
+(function initDarkMode() {
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode === 'enabled') {
+        document.body.classList.add('dark');
+        updateDarkModeIcon(true);
+    }
+})();
 document.addEventListener('DOMContentLoaded', function() {
     const isTouchDevice = () => {
         return (('ontouchstart' in window) ||

@@ -1,23 +1,23 @@
-<div class="min-h-screen bg-gray-50">
-    <div class="bg-white shadow-sm border-b sticky top-16 z-40">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div class="bg-white dark:bg-gray-800 shadow-sm border-b sticky top-16 z-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between py-3">
                 {{-- Location Selector, took inspiration from carousell.ph --}}
                 <div class="flex items-center space-x-4">
                     <div class="flex items-center space-x-2">
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                         <div class="relative">
                             <select wire:model.live="selectedRegion" 
-                                    class="appearance-none bg-transparent pr-8 pl-2 py-1 text-sm font-medium text-gray-700 focus:outline-none focus:ring-0 border-none">
+                                    class="appearance-none bg-transparent pr-8 pl-2 py-1 text-sm font-medium text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-0 border-none">
                                 <option value="">All Philippines</option>
                                 @foreach($regions as $region)
                                     <option value="{{ $region->id }}">{{ $region->name }}</option>
                                 @endforeach
                             </select>
-                            <svg class="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
