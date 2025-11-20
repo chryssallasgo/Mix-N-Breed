@@ -33,10 +33,10 @@
             </div>
         </div>
     </section>
-    <div class="bg-orange-50 pt-10 justify-center flex items-center">
+    <div class="bg-orange-50 dark:bg-gray-800 pt-10 justify-center flex items-center">
         <div class="max-w-1xl mx-auto px-4 py-4">
         <!-- statistics section -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-16">
+        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 mb-16">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="flex items-center space-x-4 p-4 hover:bg-orange-50 rounded-xl transition-colors duration-300">
                     <div class="bg-orange-100 p-3 rounded-xl">
@@ -45,8 +45,8 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-gray-800">{{ $totalDogProfiles ?? 0 }}</div>
-                        <div class="text-gray-600">Dogs Registered</div>
+                        <div class="text-3xl font-bold dark:text-white text-gray-800">{{ $totalDogProfiles ?? 0 }}</div>
+                        <div class="text-gray-600 dark:text-gray-400">Dogs Registered</div>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4 p-4 hover:bg-blue-50 rounded-xl transition-colors duration-300">
@@ -56,8 +56,8 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-gray-800">{{ $matchCount ?? 0 }}</div>
-                        <div class="text-gray-600">Matches Made</div>
+                        <div class="text-3xl font-bold dark:text-white text-gray-800">{{ $matchCount ?? 0 }}</div>
+                        <div class="text-gray-600 dark:text-gray-400">Matches Made</div>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4 p-4 hover:bg-green-50 rounded-xl transition-colors duration-300">
@@ -67,8 +67,8 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-gray-800">{{ $tipCount ?? 0 }}</div>
-                        <div class="text-gray-600">Health Tips</div>
+                        <div class="text-3xl font-bold dark:text-white text-gray-800">{{ $tipCount ?? 0 }}</div>
+                        <div class="text-gray-600 dark:text-gray-400">Health Tips</div>
                     </div>
                 </div>
             </div>
@@ -76,44 +76,44 @@
     </div>
 </div>
 <!-- How It Works Section -->
-    <section class="py-12 bg-white">
+    <section class="py-12 bg-white dark:bg-gray-900">
         <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-4 text-gray-800">How It Works</h2>
-            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Our three-step process makes breed mixing simple and informative</p>
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-800 dark:text-white">How It Works</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12 dark:text-gray-400">Our three-step process makes breed mixing simple and informative</p>
             
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border-t-4 border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="bg-orange-100 w-14 h-14 rounded-full flex items-center justify-center mb-4">
                         <i data-feather="upload" class="text-amber-500 w-6 h-6"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Upload Your Dogs</h3>
-                    <p class="text-gray-600">Create profiles for your dogs by uploading photos and entering their details.</p>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-white">Upload Your Dogs</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Create profiles for your dogs by uploading photos and entering their details.</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border-t-4 border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="bg-orange-100 w-14 h-14 rounded-full flex items-center justify-center mb-4">
                         <i data-feather="git-merge" class="text-amber-500 w-6 h-6"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Mix & Match</h3>
-                    <p class="text-gray-600">Select two breeds to see potential outcomes and compatibility factors.</p>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-white">Mix & Match</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Select two breeds to see potential outcomes and compatibility factors.</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border-t-4 border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="bg-orange-100 w-14 h-14 rounded-full flex items-center justify-center mb-4">
                         <i data-feather="bar-chart-2" class="text-amber-500 w-6 h-6"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Get Insights</h3>
-                    <p class="text-gray-600">Receive detailed reports on health, temperament, and care requirements.</p>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-white">Get Insights</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Receive detailed reports on health, temperament, and care requirements.</p>
                 </div>
             </div>
         </div>
     </section>
-  <section class="py-16 bg-gray-50">
+  <section class="py-16 bg-gray-50 dark:bg-gray-800">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-4 text-gray-800">Popular Breed Mixes</h2>
-            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Discover some of the most beloved combinations from our community</p>
+            <h2 class="text-3xl font-bold text-center mb-4 dark:text-white text-gray-800">Popular Breed Mixes</h2>
+            <p class="text-center text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12">Discover some of the most beloved combinations from our community</p>
             
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- breed_cards -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
+                <div class="bg-white dark:bg-gray-700 rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="relative h-48">
                         <img src="{{ asset('images/goldendoodle.jpg') }}" alt="Goldendoodle" class="w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black to-transparent p-4">
@@ -124,15 +124,15 @@
                     <div class="p-4">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-sm font-medium text-amber-600">Hypoallergenic</span>
-                            <span class="text-sm text-gray-500">Medium Size</span>
+                            <span class="text-sm dark:text-gray-400 text-gray-500">Medium Size</span>
                         </div>
                         <div class="h-2 bg-gray-200 rounded-full mb-2">
                             <div class="h-2 bg-amber-600 rounded-full" style="width: 85%"></div>
                         </div>
-                        <p class="text-gray-600 text-sm">85% compatibility score</p>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">85% compatibility score</p>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
+                <div class="bg-white dark:bg-gray-700 rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="relative h-48">
                         <img src="{{ asset('images/pomsky.jpg') }}" alt="Pomsky" class="w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black to-transparent p-4">
@@ -143,15 +143,15 @@
                     <div class="p-4">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-sm font-medium text-amber-600">Playful</span>
-                            <span class="text-sm text-gray-500">Small Size</span>
+                            <span class="text-sm dark:text-gray-400 text-gray-500">Small Size</span>
                         </div>
                         <div class="h-2 bg-gray-200 rounded-full mb-2">
                             <div class="h-2 bg-amber-600 rounded-full" style="width: 78%"></div>
                         </div>
-                        <p class="text-gray-600 text-sm">78% compatibility score</p>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">78% compatibility score</p>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
+                <div class="bg-white dark:bg-gray-700 rounded-xl overflow-hidden shadow-sm border-amber-600 hover:shadow-lg hover:-translate-y-3 transition">
                     <div class="relative h-48">
                         <img src="{{ asset('images/chug.jpg') }}" alt="Chug" class="w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black to-transparent p-4">
@@ -162,12 +162,12 @@
                     <div class="p-4">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-sm font-medium text-amber-600">Affectionate</span>
-                            <span class="text-sm text-gray-500">Tiny Size</span>
+                            <span class="text-sm dark:text-gray-400 text-gray-500">Tiny Size</span>
                         </div>
                         <div class="h-2 bg-gray-200 rounded-full mb-2">
                             <div class="h-2 bg-amber-600 rounded-full" style="width: 92%"></div>
                         </div>
-                        <p class="text-gray-600 text-sm">92% compatibility score</p>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">92% compatibility score</p>
                     </div>
                 </div>
             </div>

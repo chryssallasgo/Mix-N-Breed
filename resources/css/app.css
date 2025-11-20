@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
 
 .font-sans {
     font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
@@ -33,18 +34,4 @@
 .btn.btn.btn-success:hover {
     color: rgb(255, 197, 110);
     border: 2px solid #555555;
-}
-
-@layer base {
-    :root {
-        --text: black;
-        --background: orange;
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --text: white;
-        --background: black;
-    }
 }

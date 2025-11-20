@@ -260,7 +260,7 @@
     </div>
 
     <!-- Pagination for Dog Profiles -->
-    <div class="mt-6 sm:flex sm:items-center sm:justify-between">
+    <div class="mt-6 sm:flex sm:items-center sm:justify-between mb-10">
         <div class="text-sm text-gray-500 dark:text-gray-400">
             Page <span class="font-medium text-gray-700 dark:text-gray-100">{{ $dogProfiles->currentPage() }} of {{ $dogProfiles->lastPage() }}</span> 
         </div>
