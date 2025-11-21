@@ -26,8 +26,8 @@ dog-breeds/
 dog_dataset_split/
 
 # Model files (LARGE - optional, see below)
-models/*.keras
-models/*.h5
+# models/*.keras
+# models/*.h5
 
 # Logs
 *.log

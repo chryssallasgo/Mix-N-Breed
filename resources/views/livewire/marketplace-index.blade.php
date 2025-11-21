@@ -54,7 +54,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="flex gap-6">
             {{-- Sidebar filters inspired from Petfinder website --}}
-            <div class="w-64 flex-shrink-0">
+            <div class="w-64 shrink-0">
                 <div class="bg-white rounded-lg shadow-sm p-6 sticky top-32">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Filters</h3>
                     
